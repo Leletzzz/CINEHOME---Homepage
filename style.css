@@ -12,6 +12,12 @@ body {
   color: #ffffff;
 }
 
+.top10title {
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  padding: 25px 80px 25px;
+}
+
 /* -------------------- HEADER -------------------- */
 .header {
   display: flex;
@@ -142,24 +148,24 @@ body {
   background-color: #4b3ce3;
 }
 
-/* -------------------- FOOTER -------------------- */
-.cinira {
-  margin-top: auto;
-  background-color: #111;
-  padding: 10px 0;
-  text-align: center;
-}
-
 /* -------------------- NAV -------------------- */
 .div-nav {
-  padding: 10px 280px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
-  position: fixed;
-  width: 100%;
+  position: sticky;
+  top: 0; /* ela vai “grudar” no topo quando chegar ali */
+  margin-top: 30px; /* distância entre o container e a barra */
   z-index: 1000;
+
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-self: center;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(20, 20, 20, 0.5); /* efeito vidro */
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 12px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
 .nav-menu {
@@ -172,32 +178,15 @@ body {
   color: #ffffff;
   text-decoration: none;
   font-size: 1rem;
+  font-weight: 600;
   transition: color 0.3s ease;
 }
 
+.nav-menu a:hover {
+  color: #6b5bff; /* cor do destaque roxo */
+}
+
+
+
 /* -------------------- GRID DE FILMES -------------------- */
-.filmes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
-.filme-card {
-  background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  position: relative;
-  border: 1px solid #333;
-}
-
-.filme-image {
-  width: 100%;
-  height: 250px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
