@@ -24,9 +24,9 @@
     transform: scale(1.05);
 }
 
-.favoritos-btn .popcorn-icon {
-    stroke: #FFD700;
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+.favoritos-btn .heart-icon {
+    stroke: #2f00ff;
+    filter: drop-shadow(0 0 8px rgba(25, 0, 255, 0.733));
 }
 
 .favoritos-count {

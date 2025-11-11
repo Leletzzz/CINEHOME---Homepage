@@ -61,9 +61,9 @@
             margin: 0;
         }
 
-        .favoritos-page-title .popcorn-icon {
-            stroke: #FFD700;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+        .favoritos-page-title .heart-icon {
+            stroke: #0011ff;
+            filter: drop-shadow(0 0 10px rgba(0, 17, 255, 0.6));
         }
 
         .favoritos-count-badge {
@@ -381,14 +381,19 @@
           <!-- Favoritos Menu -->
           <div class="favoritos-menu-container">
             <button class="favoritos-btn" id="favoritos-btn" aria-label="Meus Favoritos">
-              <svg class="popcorn-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 22V12c0-2.21 1.79-4 4-4h2c2.21 0 4 1.79 4 4v10"/>
-                <path d="M6 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                <path d="M18 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                <path d="M12 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                <path d="M9 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                <path d="M15 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-              </svg>
+               <style>
+                .heart-icon path {
+                    fill: none;
+                    stroke: white;
+                    stroke-width: 1.8;
+                    transition: fill 0.25s ease, stroke 0.25s ease;
+                }
+                .heart-icon:hover path {
+                    fill: white;
+                    stroke: white;
+                }
+                </style>
+                <svg class="heart-icon" viewBox="0 0 24 24" width="26" height="26" xmlns="http://www.w3.org/2000/svg"> <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 c1.74 0 3.41 0.81 4.5 2.09 C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/> </svg>
               <span class="favoritos-count" id="favoritos-count">0</span>
             </button>
           </div>
@@ -514,15 +519,20 @@
         </button>
         
         <div class="favoritos-page-title">
-            <svg class="popcorn-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 22V12c0-2.21 1.79-4 4-4h2c2.21 0 4 1.79 4 4v10"/>
-                <path d="M6 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                <path d="M18 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                <path d="M12 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-            </svg>
+             <style>
+                </style>
+               <svg viewBox="0 0 24 24" width="32" height="32"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="white" stroke="none">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+                 C13.09 3.81 14.76 3 16.5 3
+                19.58 3 22 5.42 22 8.5
+                c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+ 
             <h1>Meus Favoritos</h1>
         </div>
-        
         <div class="favoritos-count-badge" id="favoritosCountBadge">
             0 filmes
         </div>
