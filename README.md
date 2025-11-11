@@ -199,7 +199,6 @@ Implementei várias camadas de segurança:
 ## 🚧 Melhorias Futuras
 
 Planejo implementar:
-- [ ] Sistema de favoritos e watchlist
 - [ ] Histórico de visualização
 - [ ] Recomendações personalizadas baseadas em ML
 - [ ] Player de vídeo próprio (sem dependência do YouTube)
@@ -207,7 +206,6 @@ Planejo implementar:
 - [ ] Testes automatizados (Jest, Cypress)
 - [ ] Integração com mais APIs de streaming
 - [ ] Sistema de comentários e avaliações
-- [ ] Filtro de comentários nas avaliações
 
 ## 📄 Licença
 
