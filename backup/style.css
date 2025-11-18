@@ -1,0 +1,202 @@
+/* -------------------- RESET -------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* -------------------- BODY -------------------- */
+body {
+  font-family: "Poppins", sans-serif;
+  background: #222222;
+  color: #ffffff;
+}
+
+/* -------------------- HEADER -------------------- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: #1a1a1a;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.logo span {
+  color: #5f5dff;
+}
+
+/* -------------------- SEARCH BAR -------------------- */
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  max-width: 500px;
+  padding: 8px 15px;
+  background: #ffffff14;
+  border: 1px solid #ffffff33;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: white;
+  outline: none;
+  font-size: 1rem;
+  padding-left: 8px;
+}
+
+.search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-bar button {
+  border: none;
+  padding: 5px 15px;
+  background-color: #ffffff14;
+  color: #ffffff14;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.search-bar button img.lupa {
+  width: 20px;
+  height: 20px;
+}
+
+/* -------------------- CONTEINER -------------------- */
+.conteiner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1a1a1a;
+  border-radius: 20px;
+  padding: 40px 60px;
+  margin: 40px auto;
+  overflow: hidden;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  gap: 50px;
+  max-width: 1500px; 
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+.topmovieimg {
+  flex: 1; 
+  display: flex;
+  justify-content: flex-start; 
+}
+
+.topmovieimg img {
+  width: 800px; 
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 0 25px rgba(95, 93, 255, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.topmovieimg img:hover {
+  transform: scale(1.03);
+}
+
+/* TEXTO */
+.topmovietext {
+  flex: 1;
+  max-width: 520px;
+}
+
+.topmovietext h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.topmovietext p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.topmovietext button {
+  background-color: #5f5dff;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.topmovietext button:hover {
+  background-color: #4b3ce3;
+}
+
+/* -------------------- FOOTER -------------------- */
+.cinira {
+  margin-top: auto;
+  background-color: #111;
+  padding: 10px 0;
+  text-align: center;
+}
+
+/* -------------------- NAV -------------------- */
+.div-nav {
+  padding: 10px 280px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+}
+
+.nav-menu {
+  display:flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-menu a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+/* -------------------- GRID DE FILMES -------------------- */
+.filmes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filme-card {
+  background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #333;
+}
+
+.filme-image {
+  width: 100%;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}

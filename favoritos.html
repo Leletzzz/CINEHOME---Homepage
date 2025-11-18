@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/favicon.ico"/>
+    <title>Meus Favoritos | CineHome</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="movie-details.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="footer-content.css">
+    <link rel="stylesheet" href="profile-menu.css">
+    <link rel="stylesheet" href="notifications.css">
+    <link rel="stylesheet" href="favoritos-page.css">
+</head>
+<body>
+
+<!-- Container principal -->
+<div class="container">
+    <!-- Cabeçalho com logotipo, barra de pesquisa e ações -->
+    <div class="site-header" role="banner" aria-label="Cabeçalho">
+        <a href="home.html" class="brand-logo" aria-label="CineHome - Página inicial">
+          <span class="brand-part brand-part-cine">CINE</span><span class="brand-part brand-part-home">HOME</span>
+        </a>
+        
+        <!-- Barra de pesquisa para filtrar favoritos -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="search-favoritos-input" placeholder="Pesquisar nos favoritos..." aria-label="Pesquisar favoritos">
+            <button class="search-button" aria-label="Buscar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="header-actions">
+          <!-- Favoritos Menu -->
+          <div class="favoritos-menu-container">
+            <button class="favoritos-btn" id="favoritos-btn" aria-label="Meus Favoritos">
+               <style>
+                .heart-icon path {
+                    fill: none;
+                    stroke: white;
+                    stroke-width: 1.8;
+                    transition: fill 0.25s ease, stroke 0.25s ease;
+                }
+                .heart-icon:hover path {
+                    fill: white;
+                    stroke: white;
+                }
+                </style>
+                <svg class="heart-icon" viewBox="0 0 24 24" width="26" height="26" xmlns="http://www.w3.org/2000/svg"> <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 c1.74 0 3.41 0.81 4.5 2.09 C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/> </svg>
+              <span class="favoritos-count" id="favoritos-count">0</span>
+            </button>
+          </div>
+          
+          <!-- Profile Menu -->
+          <div class="profile-menu-container">
+            <button class="profile-avatar-btn" id="profile-avatar-btn" aria-label="Menu de perfil" aria-haspopup="true" aria-expanded="false">
+              <img src="imagens/avatar-01.svg" alt="Avatar do usuário" class="profile-avatar-img" id="profile-avatar-img">
+              <!-- Flèche cachée sur la page favoritos -->
+            </button>
+            
+            <!-- Dropdown Menu -->
+            <div class="profile-dropdown" id="profile-dropdown" aria-hidden="true">
+              <!-- Profile List Section -->
+              <div class="profile-list">
+                <button class="profile-item" data-profile="01">
+                  <img src="imagens/avatar-01.svg" alt="Perfil 01" class="profile-item-img">
+                  <span class="profile-item-number">01</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+                
+                <button class="profile-item" data-profile="02">
+                  <img src="imagens/avatar-02.svg" alt="Perfil 02" class="profile-item-img">
+                  <span class="profile-item-number">02</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+                
+                <button class="profile-item" data-profile="03">
+                  <img src="imagens/avatar-03.svg" alt="Perfil 03" class="profile-item-img">
+                  <span class="profile-item-number">03</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+                
+                <button class="profile-item" data-profile="04">
+                  <img src="imagens/avatar-04.svg" alt="Perfil 04" class="profile-item-img">
+                  <span class="profile-item-number">04</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+                
+                <button class="profile-item" data-profile="05">
+                  <img src="imagens/avatar-05.svg" alt="Perfil 05" class="profile-item-img">
+                  <span class="profile-item-number">05</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+              </div>
+              
+              <!-- Divider -->
+              <div class="profile-divider"></div>
+              
+              <!-- Menu Options -->
+              <div class="profile-options">
+                <button class="profile-option" id="manage-profiles">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  <span>Gerenciar perfis</span>
+                </button>
+                
+                <button class="profile-option" id="exit-profile">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  <span>Sair do perfil</span>
+                </button>
+                
+                <button class="profile-option" id="account-settings">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <span>Conta</span>
+                </button>
+                
+                <button class="profile-option" id="help-center">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                  <span>Assistência Virtual <sup style="background: #EF4444; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; margin-left: 6px;">NOVO</sup></span>
+                </button>
+              </div>
+              
+              <!-- Divider -->
+              <div class="profile-divider"></div>
+              
+              <!-- Logout Button -->
+              <div class="profile-logout">
+                <button class="profile-logout-btn" id="btn-logout">
+                  <span>Sair da CINEHOME</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+<!-- Container da página de favoritos -->
+<div class="favoritos-page-container">
+    <div class="favoritos-page-header">
+        <button class="back-btn" onclick="window.location.href='home.html'" aria-label="Voltar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        
+        <div class="favoritos-page-title">
+             <style>
+                </style>
+               <svg viewBox="0 0 24 24" width="32" height="32"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="white" stroke="none">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+                 C13.09 3.81 14.76 3 16.5 3
+                19.58 3 22 5.42 22 8.5
+                c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+ 
+            <h1>Meus Favoritos</h1>
+        </div>
+        <div class="favoritos-count-badge" id="favoritosCountBadge">
+            0 filmes
+        </div>
+    </div>
+
+    <div class="favoritos-page-content">
+        <div class="favoritos-grid" id="favoritosGrid">
+            <!-- Grid de favoritos será renderizado aqui -->
+        </div>
+        
+        <div class="favoritos-empty" id="favoritosEmpty" style="display: none;">
+            <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <h2>Nenhum favorito ainda</h2>
+            <p>Adicione filmes aos seus favoritos clicando no ícone de coração</p>
+            <button class="btn-explore" onclick="window.location.href='home.html'">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                Explorar Filmes
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-notification" id="toastNotification"></div>
+
+<script src="profile-menu.js"></script>
+<script>
+// Sistema de Favoritos para a página
+const FavoritosPage = {
+    todosOsFavoritos: [],
+    
+    init() {
+        this.renderizarFavoritos();
+        this.configurarPesquisa();
+    },
+
+    obterChaveStorage() {
+        const profile = localStorage.getItem('cinehome_current_profile') || '01';
+        return `cinehome_favoritos_${profile}`;
+    },
+
+    carregarFavoritos() {
+        const chave = this.obterChaveStorage();
+        const favoritos = localStorage.getItem(chave);
+        this.todosOsFavoritos = favoritos ? JSON.parse(favoritos) : [];
+        return this.todosOsFavoritos;
+    },
+
+    salvarFavoritos(favoritos) {
+        const chave = this.obterChaveStorage();
+        localStorage.setItem(chave, JSON.stringify(favoritos));
+        this.todosOsFavoritos = favoritos;
+    },
+    
+    // Função para gerar estrelas baseado na avaliação (0-10)
+    gerarEstrelas(rating) {
+        const nota = parseFloat(rating) || 0;
+        const estrelas = Math.round((nota / 10) * 5); // Converter de 0-10 para 0-5 estrelas
+        let html = '<span class="stars">';
+        
+        for (let i = 0; i < 5; i++) {
+            if (i < estrelas) {
+                html += '★'; // Estrela cheia
+            } else {
+                html += '☆'; // Estrela vazia
+            }
+        }
+        
+        html += '</span>';
+        return html;
+    },
+
+    removerFavorito(filmeId) {
+        let favoritos = this.carregarFavoritos();
+        favoritos = favoritos.filter(f => f.id !== filmeId);
+        this.salvarFavoritos(favoritos);
+        // Reaplica o filtro de pesquisa se houver
+        const searchInput = document.getElementById('search-favoritos-input');
+        if (searchInput && searchInput.value.trim()) {
+            this.filtrarFavoritos(searchInput.value.trim());
+        } else {
+            this.renderizarFavoritos();
+        }
+        this.mostrarNotificacao('Removido dos favoritos', 'success');
+    },
+
+    configurarPesquisa() {
+        const searchInput = document.getElementById('search-favoritos-input');
+        const searchButton = document.querySelector('.search-button');
+        
+        if (searchInput) {
+            // Pesquisa em tempo real
+            searchInput.addEventListener('input', (e) => {
+                const termo = e.target.value.trim();
+                this.filtrarFavoritos(termo);
+            });
+            
+            // Pesquisa ao clicar no botão
+            if (searchButton) {
+                searchButton.addEventListener('click', () => {
+                    const termo = searchInput.value.trim();
+                    this.filtrarFavoritos(termo);
+                });
+            }
+            
+            // Pesquisa ao pressionar Enter
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const termo = searchInput.value.trim();
+                    this.filtrarFavoritos(termo);
+                }
+            });
+        }
+    },
+
+    filtrarFavoritos(termo) {
+        if (!termo) {
+            // Se não houver termo de pesquisa, mostra todos
+            this.renderizarFavoritos();
+            return;
+        }
+
+        const favoritos = this.carregarFavoritos();
+        const termoLower = termo.toLowerCase();
+        
+        // Filtrar favoritos pelo título, ano ou gêneros
+        const favoritosFiltrados = favoritos.filter(filme => {
+            const titulo = (filme.titulo || filme.title || '').toLowerCase();
+            const ano = (filme.ano || filme.year || '').toString();
+            const generos = (filme.generos || filme.genres || '').toLowerCase();
+            
+            return titulo.includes(termoLower) || 
+                   ano.includes(termoLower) || 
+                   generos.includes(termoLower);
+        });
+        
+        console.log(`🔍 Pesquisa: "${termo}" - ${favoritosFiltrados.length} resultados`);
+        this.renderizarFavoritos(favoritosFiltrados);
+    },
+
+    renderizarFavoritos(favoritosParaRenderizar = null) {
+        const favoritos = favoritosParaRenderizar || this.carregarFavoritos();
+        const grid = document.getElementById('favoritosGrid');
+        const empty = document.getElementById('favoritosEmpty');
+        const countBadge = document.getElementById('favoritosCountBadge');
+        const favoritosCount = document.getElementById('favoritos-count');
+
+        // Atualizar contador (sempre mostra o total, não o filtrado)
+        const totalFavoritos = this.todosOsFavoritos.length;
+        countBadge.textContent = `${totalFavoritos} ${totalFavoritos === 1 ? 'filme' : 'filmes'}`;
+        
+        // Atualizar também o badge do botão de favoritos
+        if (favoritosCount) {
+            favoritosCount.textContent = totalFavoritos;
+            favoritosCount.style.display = totalFavoritos > 0 ? 'flex' : 'none';
+        }
+
+        if (favoritos.length === 0) {
+            grid.innerHTML = '';
+            
+            // Verifica se está vazio por causa da pesquisa ou realmente não há favoritos
+            const searchInput = document.getElementById('search-favoritos-input');
+            if (searchInput && searchInput.value.trim() && totalFavoritos > 0) {
+                // Mostra mensagem de nenhum resultado na pesquisa
+                empty.innerHTML = `
+                    <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <h2>Nenhum resultado encontrado</h2>
+                    <p>Tente pesquisar com outros termos</p>
+                    <button class="btn-explore" onclick="document.getElementById('search-favoritos-input').value=''; FavoritosPage.renderizarFavoritos()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                            <path d="M21 3v5h-5"></path>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                            <path d="M3 21v-5h5"></path>
+                        </svg>
+                        Limpar Pesquisa
+                    </button>
+                `;
+            } else {
+                // Mensagem padrão de lista vazia
+                empty.innerHTML = `
+                    <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <h2>Nenhum favorito ainda</h2>
+                    <p>Adicione filmes aos seus favoritos clicando no ícone de coração</p>
+                    <button class="btn-explore" onclick="window.location.href='home.html'">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        Explorar Filmes
+                    </button>
+                `;
+            }
+            empty.style.display = 'block';
+            return;
+        }
+
+        empty.style.display = 'none';
+        
+        grid.innerHTML = favoritos.map(filme => `
+            <div class="favorito-card" onclick="window.location.href='movie-details.html?id=${filme.id}'">
+                <img src="${filme.poster || filme.backdrop}" alt="${filme.titulo || filme.title}" class="favorito-card-poster" onerror="this.src='img/placeholder.jpg'">
+                <div class="favorito-card-content">
+                    <h3 class="favorito-card-title">${filme.titulo || filme.title || 'Filme'}</h3>
+                    <div class="favorito-card-meta">
+                        <span class="favorito-card-year">${filme.ano || filme.year || 'N/A'}</span>
+                        <span class="favorito-card-rating">
+                            ${this.gerarEstrelas(filme.avaliacao || filme.rating || 0)}
+                            <span>${filme.avaliacao || filme.rating || 'N/A'}</span>
+                        </span>
+                    </div>
+                    <button class="favorito-card-remove" onclick="event.stopPropagation(); FavoritosPage.removerFavorito('${filme.id}')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                        Remover
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    },
+
+    mostrarNotificacao(mensagem, tipo = 'success') {
+        const toast = document.getElementById('toastNotification');
+        toast.textContent = mensagem;
+        toast.className = `toast-notification ${tipo} show`;
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+};
+
+// Listener para mudanças de perfil
+window.addEventListener('storage', (e) => {
+    if (e.key === 'cinehome_current_profile') {
+        console.log('🔄 Perfil alterado, atualizando favoritos...');
+        FavoritosPage.renderizarFavoritos();
+    }
+});
+
+// Desabilitar o menu de perfis na página de favoritos
+document.addEventListener('DOMContentLoaded', () => {
+    FavoritosPage.init();
+    
+    // Remover evento de clique do botão de perfil
+    const profileBtn = document.getElementById('profile-avatar-btn');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    const favoritosMenu = document.querySelector('.favoritos-menu-container');
+    
+    if (profileBtn && profileDropdown) {
+        // Desabilitar abertura do dropdown
+        profileBtn.style.cursor = 'default';
+        profileBtn.setAttribute('aria-haspopup', 'false');
+        profileBtn.setAttribute('disabled', 'true');
+        
+        // Garantir que o dropdown nunca aparece
+        profileDropdown.style.display = 'none !important';
+        profileDropdown.style.visibility = 'hidden';
+        profileDropdown.style.pointerEvents = 'none';
+        
+        // Remover qualquer listener de clique existente
+        const newProfileBtn = profileBtn.cloneNode(true);
+        profileBtn.parentNode.replaceChild(newProfileBtn, profileBtn);
+        
+        console.log('🚫 Menu de perfil desabilitado na página de favoritos');
+    }
+
+    // Remover completamente o ícone de favoritos do menu nesta página
+    if (favoritosMenu) {
+        favoritosMenu.remove();
+        console.log('💔 Ícone de favoritos removido desta página.');
+    }
+});
+</script>
+
+</body>
+</html>

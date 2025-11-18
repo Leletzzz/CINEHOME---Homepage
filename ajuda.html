@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Ajuda - CINEHOME</title>
+    <link rel="icon" href="./imagens/icon.png">
+    <link rel="stylesheet" href="ajuda.css">
+</head>
+<body>
+    <a href="home.html" class="back-btn">← Voltar</a>
+    
+    <h1 class="site-title">
+        <span class="cine">CINE</span><span class="home">HOME</span>
+    </h1>
+
+    <div class="ajuda-wrapper">
+        <div class="ajuda-header">
+            <h1>🤖 Central de Ajuda</h1>
+            <p>Tire suas dúvidas com nosso assistente virtual!</p>
+        </div>
+
+        <div class="chat-container">
+            <div id="errorContainer"></div>
+            <div id="chatMessages" class="chat-messages">
+                <div class="welcome-message">
+                    👋 Olá! Sou o assistente virtual da CINEHOME.<br>
+                    Estou aqui para ajudá-lo a descobrir avaliações e informações sobre filmes e séries!<br>
+                    Como posso ajudá-lo hoje?
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input 
+                    type="text" 
+                    id="chatInput" 
+                    class="chat-input" 
+                    placeholder="Digite sua pergunta aqui..."
+                    autocomplete="off"
+                >
+                <button id="sendBtn" class="send-btn">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração da API
+        const API_URL = 'https://cinehome.onrender.com/api/chat';
+
+        // Elementos DOM
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const errorContainer = document.getElementById('errorContainer');
+
+        /**
+         * Adiciona mensagem ao chat
+         * @param {string} message - Conteúdo da mensagem
+         * @param {string} sender - 'user' ou 'bot'
+         */
+        function addMessage(message, sender) {
+            // Remover mensagem de boas-vindas se existir
+            const welcomeMsg = chatMessages.querySelector('.welcome-message');
+            if (welcomeMsg) {
+                welcomeMsg.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = message;
+            
+            messageDiv.appendChild(contentDiv);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll automático para a última mensagem
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        /**
+         * Mostra mensagem de erro
+         * @param {string} message - Mensagem de erro
+         */
+        function showError(message) {
+            errorContainer.innerHTML = `
+                <div class="error-message">
+                    ⚠️ ${message}
+                </div>
+            `;
+            setTimeout(() => {
+                errorContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        /**
+         * Envia mensagem para o backend
+         * @param {string} message - Mensagem do usuário
+         */
+        async function sendMessage(message) {
+            if (!message.trim()) return;
+
+            // Adicionar mensagem do usuário
+            addMessage(message, 'user');
+            
+            // Limpar input
+            chatInput.value = '';
+            
+            // Desabilitar botão e input durante envio
+            sendBtn.disabled = true;
+            chatInput.disabled = true;
+            sendBtn.innerHTML = '<span class="loading">Enviando</span>';
+
+            try {
+                // Fazer requisição para o backend
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erro ao enviar mensagem');
+                }
+
+                // Adicionar resposta do bot
+                if (data.response) {
+                    addMessage(data.response, 'bot');
+                } else {
+                    throw new Error('Resposta vazia do servidor');
+                }
+
+            } catch (error) {
+                console.error('Erro ao enviar mensagem:', error);
+                showError(error.message || 'Erro ao conectar com o servidor. Verifique se o backend está rodando.');
+                addMessage('Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente.', 'bot');
+            } finally {
+                // Reabilitar botão e input
+                sendBtn.disabled = false;
+                chatInput.disabled = false;
+                sendBtn.textContent = 'Enviar';
+                chatInput.focus();
+            }
+        }
+
+        // Event listeners
+        sendBtn.addEventListener('click', () => {
+            const message = chatInput.value;
+            sendMessage(message);
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !sendBtn.disabled) {
+                const message = chatInput.value;
+                sendMessage(message);
+            }
+        });
+
+        // Focar input ao carregar página
+        window.addEventListener('load', () => {
+            chatInput.focus();
+        });
+
+        // Verificar conexão com backend ao carregar
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch('https://cinehome.onrender.com/health');
+                if (!response.ok) {
+                    showError('Backend não está respondendo. Verifique a conexão com o servidor.');
+                }
+            } catch (error) {
+                showError('Backend não está respondendo. Verifique a conexão com o servidor.');
+            }
+        });
+    </script>
+</body>
+</html>

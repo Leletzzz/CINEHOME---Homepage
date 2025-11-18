@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/favicon.ico"/>
+    <title>Quem está assistindo? - CINEHOME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="notifications.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background avec grille de films */
+        .profile-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            background-image: url('imagens/Background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .profile-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 10, 0.65) 0%,
+                rgba(10, 10, 10, 0.55) 50%,
+                rgba(10, 10, 10, 0.65) 100%
+            );
+            z-index: 2;
+        }
+
+        .movies-grid {
+            display: none;
+        }
+
+        /* Container principal */
+        .profile-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        /* Logo */
+        .profile-logo {
+            margin-bottom: 60px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .brand-logo {
+            font-size: 72px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: -2px;
+        }
+
+        .brand-part-cine {
+            color: #fff;
+        }
+
+        .brand-part-home {
+            color: #6366f1;
+        }
+
+        /* Titre */
+        .profile-title {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 60px;
+            color: #fff;
+            animation: fadeInDown 0.6s ease 0.1s both;
+        }
+
+        /* Grille de profils */
+        .profiles-grid {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        /* Carte de profil */
+        .profile-card {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .profile-card:nth-child(1) { animation-delay: 0.3s; }
+        .profile-card:nth-child(2) { animation-delay: 0.35s; }
+        .profile-card:nth-child(3) { animation-delay: 0.4s; }
+        .profile-card:nth-child(4) { animation-delay: 0.45s; }
+        .profile-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .profile-card:hover {
+            transform: translateY(-12px) scale(1.05);
+        }
+
+        .profile-card:active {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        /* Avatar du profil */
+        .profile-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            margin-bottom: 16px;
+            border: 4px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card:hover .profile-avatar {
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Couleurs des avatars */
+        .profile-card:nth-child(1) .profile-avatar {
+            background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);
+        }
+
+        .profile-card:nth-child(2) .profile-avatar {
+            background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);
+        }
+
+        .profile-card:nth-child(3) .profile-avatar {
+            background: linear-gradient(135deg, #EF4444 0%, #F97316 100%);
+        }
+
+        .profile-card:nth-child(4) .profile-avatar {
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+        }
+
+        .profile-card:nth-child(5) .profile-avatar {
+            background: linear-gradient(135deg, #10B981 0%, #14B8A6 100%);
+        }
+
+        /* Informations du profil */
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-number {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        .profile-lock {
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .profile-lock.locked {
+            opacity: 1;
+            color: #EF4444;
+        }
+
+        .profile-card:hover .profile-lock {
+            opacity: 1;
+        }
+
+        /* PIN Modal */
+        .pin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pin-modal.active {
+            display: flex;
+        }
+
+        .pin-content {
+            background: rgba(20, 20, 20, 0.95);
+            border: 2px solid #6366f1;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.5);
+        }
+
+        .pin-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .pin-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+        }
+
+        .pin-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 24px;
+            text-align: center;
+            letter-spacing: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .pin-input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .pin-input.error {
+            border-color: #EF4444;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .pin-error {
+            color: #EF4444;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .pin-error.show {
+            display: block;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .profile-title {
+                font-size: 36px;
+                margin-bottom: 40px;
+            }
+
+            .brand-logo {
+                font-size: 56px;
+            }
+
+            .profile-avatar {
+                width: 160px;
+                height: 160px;
+                font-size: 80px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-title {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+
+            .brand-logo {
+                font-size: 48px;
+            }
+
+            .profile-avatar {
+                width: 140px;
+                height: 140px;
+                font-size: 70px;
+            }
+
+            .profiles-grid {
+                gap: 16px;
+            }
+
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-title {
+                font-size: 24px;
+            }
+
+            .brand-logo {
+                font-size: 36px;
+            }
+
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 60px;
+                border-radius: 12px;
+            }
+
+            .profile-number {
+                font-size: 16px;
+            }
+        }
+
+        /* Loading animation */
+        .profile-card.loading .profile-avatar {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background avec grille de films -->
+    <div class="profile-background">
+        <div class="movies-grid" id="movies-grid">
+            <!-- Les posters seront ajoutés dynamiquement -->
+        </div>
+    </div>
+
+    <!-- Container principal -->
+    <div class="profile-container">
+        <!-- Logo -->
+        <div class="profile-logo">
+            <a href="index.html" class="brand-logo">
+                <span class="brand-part-cine">CINE</span><span class="brand-part-home">HOME</span>
+            </a>
+        </div>
+
+        <!-- Titre -->
+        <h1 class="profile-title">Quem está assistindo?</h1>
+
+        <!-- Grille de profils -->
+        <div class="profiles-grid">
+            <!-- Profil 01 -->
+            <div class="profile-card" data-profile="01">
+                <div class="profile-avatar">😊</div>
+                <div class="profile-info">
+                    <div class="profile-number">01</div>
+                    <svg class="profile-lock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Profil 02 -->
+            <div class="profile-card" data-profile="02">
+                <div class="profile-avatar">🌟</div>
+                <div class="profile-info">
+                    <div class="profile-number">02</div>
+                    <svg class="profile-lock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Profil 03 -->
+            <div class="profile-card" data-profile="03">
+                <div class="profile-avatar">😎</div>
+                <div class="profile-info">
+                    <div class="profile-number">03</div>
+                    <svg class="profile-lock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Profil 04 -->
+            <div class="profile-card" data-profile="04">
+                <div class="profile-avatar">🤩</div>
+                <div class="profile-info">
+                    <div class="profile-number">04</div>
+                    <svg class="profile-lock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Profil 05 -->
+            <div class="profile-card" data-profile="05">
+                <div class="profile-avatar">😺</div>
+                <div class="profile-info">
+                    <div class="profile-number">05</div>
+                    <svg class="profile-lock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PIN Modal -->
+    <div class="pin-modal" id="pinModal">
+        <div class="pin-content">
+            <h2 class="pin-title">Perfil Bloqueado</h2>
+            <p class="pin-subtitle">Digite o código PIN de 4 dígitos</p>
+            <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" inputmode="numeric">
+            <p class="pin-error" id="pinError">Código incorreto!</p>
+        </div>
+    </div>
+
+    <script>
+        // Liste de posters de films populaires
+        const moviePosters = [
+            'https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg',
+            'https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
+            'https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg',
+            'https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg',
+            'https://image.tmdb.org/t/p/w500/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg',
+            'https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg',
+            'https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg',
+            'https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg',
+            'https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',
+            'https://image.tmdb.org/t/p/w500/7vjaCdMw15FEbXyLQTVa04URsPm.jpg',
+            'https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
+            'https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg',
+            'https://image.tmdb.org/t/p/w500/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg',
+            'https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg',
+            'https://image.tmdb.org/t/p/w500/4GQfEI0n0V2lxh9H9n1tFoZT3zh.jpg',
+            'https://image.tmdb.org/t/p/w500/2QL5j6mB4ZpyBcVr0WO9H9MQGB8.jpg',
+            'https://image.tmdb.org/t/p/w500/sWgBv7LV2PRoQgkxwlibdGXKz1S.jpg',
+            'https://image.tmdb.org/t/p/w500/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg',
+            'https://image.tmdb.org/t/p/original/4GQfEI0n0V2lxh9H9n1tFoZT3zh.jpg',
+            'https://image.tmdb.org/t/p/original/2QL5j6mB4ZpyBcVr0WO9H9MQGB8.jpg',
+            'https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg',
+            'https://image.tmdb.org/t/p/original/8YFL5QQVPy3AgrEQxNYVSgiPEbe.jpg',
+            'https://image.tmdb.org/t/p/original/9n2tJBplPbgR2ca05hS5CKXwP2c.jpg'
+        ];
+
+        // Générer la grille de films en arrière-plan
+        function generateMoviesGrid() {
+            const grid = document.getElementById('movies-grid');
+            const numberOfPosters = 60; // Nombre de posters à afficher
+
+            for (let i = 0; i < numberOfPosters; i++) {
+                const img = document.createElement('img');
+                img.src = moviePosters[i % moviePosters.length];
+                img.className = 'movie-poster';
+                img.alt = 'Movie poster';
+                img.loading = 'lazy';
+                grid.appendChild(img);
+            }
+        }
+
+        // Initialiser la grille au chargement
+        document.addEventListener('DOMContentLoaded', generateMoviesGrid);
+
+        // Variables globales pour le PIN
+        let selectedProfileId = null;
+
+        // Charger les profils et mettre à jour l'UI
+        function loadProfiles() {
+            const profiles = JSON.parse(localStorage.getItem('cinehome_profiles') || '{}');
+            
+            document.querySelectorAll('.profile-card').forEach(card => {
+                const profileId = card.getAttribute('data-profile');
+                const profile = profiles[profileId];
+                const lockIcon = card.querySelector('.profile-lock');
+                const numberElement = card.querySelector('.profile-number');
+                
+                // Mettre à jour le nom du profil
+                if (profile && profile.name) {
+                    numberElement.textContent = profile.name;
+                }
+                
+                // Mettre à jour l'icône de cadenas
+                if (profile && profile.locked) {
+                    lockIcon.classList.add('locked');
+                    // Changer l'icône pour un cadenas fermé
+                    lockIcon.innerHTML = `
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    `;
+                } else {
+                    lockIcon.classList.remove('locked');
+                    // Icône de cadenas ouvert
+                    lockIcon.innerHTML = `
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    `;
+                }
+            });
+        }
+
+        // Ouvrir le modal PIN
+        function openPinModal(profileId) {
+            selectedProfileId = profileId;
+            const modal = document.getElementById('pinModal');
+            const pinInput = document.getElementById('pinInput');
+            const pinError = document.getElementById('pinError');
+            
+            modal.classList.add('active');
+            pinInput.value = '';
+            pinInput.classList.remove('error');
+            pinError.classList.remove('show');
+            
+            setTimeout(() => pinInput.focus(), 100);
+        }
+
+        // Fermer le modal PIN
+        function closePinModal() {
+            const modal = document.getElementById('pinModal');
+            modal.classList.remove('active');
+            selectedProfileId = null;
+        }
+
+        // Vérifier le PIN automatiquement
+        function verifyPin() {
+            const pinInput = document.getElementById('pinInput');
+            const pinError = document.getElementById('pinError');
+            const enteredPin = pinInput.value;
+            
+            if (enteredPin.length !== 4) {
+                return;
+            }
+            
+            const profiles = JSON.parse(localStorage.getItem('cinehome_profiles') || '{}');
+            const profile = profiles[selectedProfileId];
+            
+            if (profile && profile.password === enteredPin) {
+                // PIN correto - redirection immédiate
+                notify.success('PIN correto!', 'Carregando perfil...', 1500);
+                setTimeout(() => {
+                    localStorage.setItem('cinehome_current_profile', selectedProfileId);
+                    window.location.href = 'home.html';
+                }, 500);
+            } else {
+                // PIN incorreto
+                notify.error('PIN incorreto', 'Código incorreto. Tente novamente.');
+                pinInput.classList.add('error');
+                pinError.textContent = 'Código incorreto!';
+                pinError.classList.add('show');
+                pinInput.value = '';
+                
+                setTimeout(() => {
+                    pinInput.classList.remove('error');
+                    pinError.classList.remove('show');
+                }, 1500);
+            }
+        }
+
+        // Permitir Enter para confirmar PIN
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('pinModal');
+            if (modal.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closePinModal();
+                }
+            }
+        });
+
+        // Aceitar apenas números no PIN et vérifier automatiquement
+        document.getElementById('pinInput').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            
+            // Vérifier automatiquement quand 4 chiffres sont entrés
+            if (this.value.length === 4) {
+                setTimeout(() => verifyPin(), 300);
+            }
+        });
+
+        // Gestion des clics sur les profils
+        const profileCards = document.querySelectorAll('.profile-card');
+        
+        profileCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const profileId = this.getAttribute('data-profile');
+                const profiles = JSON.parse(localStorage.getItem('cinehome_profiles') || '{}');
+                const profile = profiles[profileId];
+                
+                // Vérifier si le profil est verrouillé
+                if (profile && profile.locked && profile.password) {
+                    openPinModal(profileId);
+                } else {
+                    // Profil non verrouillé - accès direct
+                    this.classList.add('loading');
+                    localStorage.setItem('cinehome_current_profile', profileId);
+                    
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 600);
+                }
+            });
+
+            // Effet hover audio (optionnel)
+            card.addEventListener('mouseenter', function() {
+                // Vous pouvez ajouter un son ici si vous le souhaitez
+            });
+        });
+
+        // Vérifier si l'utilisateur est connecté
+        document.addEventListener('DOMContentLoaded', function() {
+            // Vérifier l'authentification
+            const user = localStorage.getItem('cinehome_user');
+            const token = localStorage.getItem('token');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (!token || !userEmail) {
+                // Rediriger vers la page de login si non connecté
+                console.log('Usuário não conectado, redirecionando para login...');
+                window.location.href = 'login.html';
+            } else {
+                console.log('✅ Usuário conectado, pode selecionar perfil');
+                loadProfiles();
+            }
+        });
+
+        // Gérer le retour OAuth Google (token dans l'URL)
+        const urlParams = new URLSearchParams(window.location.search);
+        const oauthToken = urlParams.get('token');
+        const oauthEmail = urlParams.get('email');
+        const isNewUser = urlParams.get('new');
+        const isExistingUser = urlParams.get('existing');
+
+        if (oauthToken && oauthEmail) {
+            console.log('✅ Token OAuth reçu, sauvegarde...');
+            localStorage.setItem('token', oauthToken);
+            localStorage.setItem('userEmail', oauthEmail);
+            
+            // Nettoyer l'URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+            
+            // Afficher un message de bienvenue
+            if (isNewUser === 'true') {
+                console.log('🎉 Nouveau compte créé via Google!');
+                if (typeof notify !== 'undefined') {
+                    notify.success('Bem-vindo!', 'Conta criada com sucesso via Google!');
+                }
+            } else if (isExistingUser === 'true') {
+                console.log('✅ Connexion réussie via Google (compte existant)');
+                if (typeof notify !== 'undefined') {
+                    notify.success('Bem-vindo de volta!', 'Login realizado com Google!');
+                }
+            } else {
+                console.log('✅ Login realizado via Google');
+                if (typeof notify !== 'undefined') {
+                    notify.success('Bem-vindo!', 'Login realizado com sucesso via Google!');
+                }
+            }
+            
+            // Recarregar os perfis
+            setTimeout(() => {
+                loadProfiles();
+            }, 1000);
+        }
+    </script>
+    <script src="notifications.js"></script>
+    <script src="auto-config-tmdb.js"></script>
+</body>
+</html>
+

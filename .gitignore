@@ -1,0 +1,35 @@
+.vscode/
+
+# Fichiers de test - TOUS les fichiers commençant par "test"
+test*
+
+# Fichiers Markdown
+*.md
+*.MD
+
+# Fichiers de documentation spécifiques
+README.md
+READNE.md
+DEBUG-*.md
+GUIDE-*.md
+FIX-*.md
+README-*.md
+
+# Node modules
+node_modules/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.temp
+~*
+
+# Environnements
+.env
+.env.local

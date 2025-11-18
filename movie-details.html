@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/favicon.ico"/>
+    <title>Detalhes do Filme | CineHome</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="footer-content.css">
+    <link rel="stylesheet" href="search-results.css">
+    <link rel="stylesheet" href="profile-menu.css">
+    <link rel="stylesheet" href="notifications.css">
+    <link rel="stylesheet" href="confirm-modal.css">
+    <link rel="stylesheet" href="movie-details.css">
+    <link rel="stylesheet" href="favoritos.css">
+</head>
+<body>
+
+<!-- Container principal -->
+<div class="container">
+    <!-- Cabeçalho (mesmo de home.html) -->
+    <div class="site-header" role="banner" aria-label="Cabeçalho">
+        <a href="home.html" class="brand-logo" aria-label="CineHome - Página inicial">
+          <span class="brand-part brand-part-cine">CINE</span><span class="brand-part brand-part-home">HOME</span>
+        </a>
+        
+        <!-- Barra de pesquisa -->
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Pesquisar filmes..." aria-label="Pesquisar filmes">
+            <button class="search-button" aria-label="Buscar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="header-actions">
+          <!-- Favoritos Menu -->
+          <div class="favoritos-menu-container">
+            <button class="favoritos-btn" id="favoritos-btn" aria-label="Meus Favoritos">
+                <style>
+                .heart-icon path {
+                    fill: none;
+                    stroke: white;
+                    stroke-width: 1.8;
+                    transition: fill 0.25s ease, stroke 0.25s ease;
+                }
+                .heart-icon:hover path {
+                    fill: white;
+                    stroke: white;
+                }
+                </style>
+                <svg class="heart-icon" viewBox="0 0 24 24" width="26" height="26" xmlns="http://www.w3.org/2000/svg"> <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 c1.74 0 3.41 0.81 4.5 2.09 C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/> </svg>
+              <span class="favoritos-count" id="favoritos-count">0</span>
+            </button>
+          </div>
+          
+          <!-- Profile Menu -->
+          <div class="profile-menu-container">
+            <button class="profile-avatar-btn" id="profile-avatar-btn" aria-label="Menu de perfil">
+              <img src="imagens/avatar-01.svg" alt="Avatar do usuário" class="profile-avatar-img" id="profile-avatar-img">
+              <svg class="profile-dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            
+            <!-- Dropdown Menu -->
+            <div class="profile-dropdown" id="profile-dropdown" aria-hidden="true">
+              <div class="profile-list">
+                <button class="profile-item" data-profile="01">
+                  <img src="imagens/avatar-01.svg" alt="Perfil 01" class="profile-item-img">
+                  <span class="profile-item-number">01</span>
+                </button>
+                <button class="profile-item" data-profile="02">
+                  <img src="imagens/avatar-02.svg" alt="Perfil 02" class="profile-item-img">
+                  <span class="profile-item-number">02</span>
+                </button>
+                <button class="profile-item" data-profile="03">
+                  <img src="imagens/avatar-03.svg" alt="Perfil 03" class="profile-item-img">
+                  <span class="profile-item-number">03</span>
+                </button>
+                <button class="profile-item" data-profile="04">
+                  <img src="imagens/avatar-04.svg" alt="Perfil 04" class="profile-item-img">
+                  <span class="profile-item-number">04</span>
+                </button>
+                <button class="profile-item" data-profile="05">
+                  <img src="imagens/avatar-05.svg" alt="Perfil 05" class="profile-item-img">
+                  <span class="profile-item-number">05</span>
+                </button>
+              </div>
+              
+              <div class="profile-divider"></div>
+              
+              <div class="profile-options">
+                <button class="profile-option" id="manage-profiles">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  <span>Gerenciar perfis</span>
+                </button>
+                
+                <button class="profile-option" id="exit-profile">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  <span>Sair do perfil</span>
+                </button>
+                
+                <button class="profile-option" id="account-settings">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <span>Conta</span>
+                </button>
+                
+                <button class="profile-option" id="help-center">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                  <span>Assistente Virtual <sup style="background: #EF4444; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; margin-left: 6px;">NOVO</sup></span>
+                </button>
+              </div>
+              
+              <div class="profile-divider"></div>
+              
+              <div class="profile-logout">
+                <button class="profile-logout-btn" id="btn-logout">
+                  <span>Sair da CINEHOME</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <button id="btn-open-settings" class="btn btn-secondary btn-settings">
+            Configurar TMDB
+          </button>
+        </div>
+    </div>
+
+    <!-- Hero Banner com Vídeo -->
+    <div class="movie-hero">
+        <div class="movie-hero-backdrop">
+            <img id="movie-backdrop" src="" alt="Backdrop do filme">
+            <div class="movie-hero-gradient"></div>
+        </div>
+        
+        <div class="movie-hero-content">
+            <div class="movie-poster-container">
+                <img id="movie-poster" src="" alt="Poster do filme" class="movie-poster">
+                <button class="play-trailer-btn" id="play-trailer-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <span>2:18</span>
+                </button>
+            </div>
+            
+            <div class="movie-info-main">
+                <h1 class="movie-title-main" id="movie-title"></h1>
+                <div class="movie-meta">
+                    <span class="movie-rating-badge" id="movie-rating-badge">R</span>
+                    <span class="movie-status" id="movie-status">Now Playing</span>
+                    <span class="movie-duration" id="movie-duration">1h 58m</span>
+                    <span class="movie-genres" id="movie-genres">Mystery & Thriller</span>
+                </div>
+                
+                <button class="add-watchlist-btn" id="add-watchlist-btn" aria-label="Adicionar aos favoritos">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Avaliações -->
+    <div class="ratings-section">
+        <div class="rating-card star-rating">
+            <div class="rating-content-star">
+                <div class="rating-label">Avaliação</div>
+                <div class="stars-container" id="stars-container">
+                    <svg class="star" width="40" height="40" viewBox="0 0 24 24" fill="#FFD700">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <svg class="star" width="40" height="40" viewBox="0 0 24 24" fill="#FFD700">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <svg class="star" width="40" height="40" viewBox="0 0 24 24" fill="#FFD700">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <svg class="star" width="40" height="40" viewBox="0 0 24 24" fill="#FFD700">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <svg class="star" width="40" height="40" viewBox="0 0 24 24" fill="#FFD700">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                </div>
+                <div class="rating-score-text" id="rating-score-text">8.5/10</div>
+                <div class="rating-count" id="rating-count">Baseado em 1.234 avaliações</div>
+            </div>
+        </div>
+        
+        <div class="rating-card streaming-providers">
+            <div class="rating-content-streaming">
+                <div class="rating-label">Por onde assistir:</div>
+                <div class="streaming-logos" id="streaming-logos">
+                    <div class="streaming-item">
+                        <img src="https://image.tmdb.org/t/p/original/pbpMk2JmcoNnQwx5JGpXngfoWtp.jpg" alt="Netflix">
+                        <span>Netflix</span>
+                    </div>
+                    <div class="streaming-item">
+                        <img src="https://image.tmdb.org/t/p/original/Ajqyt5aNxNGjmF9uOfxArGrdf3X.jpg" alt="HBO Max">
+                        <span>HBO Max</span>
+                    </div>
+                    <div class="streaming-item">
+                        <img src="https://image.tmdb.org/t/p/original/7rwgEs15tFwyR9NPQ5vpzxTj19Q.jpg" alt="Disney+">
+                        <span>Disney+</span>
+                    </div>
+                </div>
+                <div class="streaming-note" id="streaming-note">Disponibilidade pode variar por região</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sinopse -->
+    <div class="synopsis-section">
+        <div class="synopsis-content">
+            <p class="synopsis-text" id="synopsis-text">
+                Two conspiracy obsessed young men kidnap the high-powered CEO of a major company, convinced that she is an alien intent on destroying planet Earth.
+            </p>
+            <button class="synopsis-expand" id="synopsis-expand">▼</button>
+        </div>
+    </div>
+
+    <!-- Seção de Avaliação do Usuário -->
+    <div class="section user-review-section">
+        <h2 class="section-title">Deixe sua Avaliação</h2>
+        
+        <div class="user-review-container">
+            <!-- Seletor de Estrelas -->
+            <div class="rating-input-wrapper">
+                <label class="rating-label">Sua nota:</label>
+                <div class="star-rating-input" id="star-rating-input">
+                    <span class="star-input" data-value="1">☆</span>
+                    <span class="star-input" data-value="2">☆</span>
+                    <span class="star-input" data-value="3">☆</span>
+                    <span class="star-input" data-value="4">☆</span>
+                    <span class="star-input" data-value="5">☆</span>
+                </div>
+                <span class="rating-value" id="rating-value">0/5</span>
+            </div>
+
+            <!-- Campo de Comentário -->
+            <div class="comment-input-wrapper">
+                <label class="comment-label" for="user-comment">Seu comentário:</label>
+                <textarea 
+                    id="user-comment" 
+                    class="user-comment-textarea" 
+                    placeholder="Compartilhe sua opinião sobre este filme... O que você achou da história, atuações, direção?"
+                    maxlength="500"
+                    rows="5"></textarea>
+                <div class="comment-footer">
+                    <span class="char-count" id="char-count">0/500</span>
+                    <button class="submit-review-btn" id="submit-review-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                        Publicar Avaliação
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Central de Ajuda -->
+<div id="ajuda" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Central de Ajuda</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Bem-vindo à Central de Ajuda do CineHome</h2>
+            <p>Estamos aqui para ajudá-lo a aproveitar ao máximo sua experiência no CineHome. Encontre respostas para as perguntas mais frequentes abaixo.</p>
+            
+            <h3>Conta e Autenticação</h3>
+            <p><strong>Como faço para criar uma conta?</strong></p>
+            <p>Clique em "Entrar" no topo da página e escolha criar uma nova conta com seu e-mail ou usar login social com Google.</p>
+            
+            <p><strong>Esqueci minha senha, o que fazer?</strong></p>
+            <p>Na página de login, clique em "Esqueceu a senha?" e receberá um código de 6 dígitos por e-mail para redefinir sua senha.</p>
+            
+            <h3>Avaliações e Recomendações</h3>
+            <p><strong>Como funcionam as avaliações do CineHome?</strong></p>
+            <p>Nossas avaliações combinam dados do TMDB com análises geradas por inteligência artificial para fornecer recomendações personalizadas.</p>
+            
+            <p><strong>Como configuro a API do TMDB?</strong></p>
+            <p>Clique em "Configurar TMDB" no topo da página e insira sua chave API gratuita obtida em themoviedb.org.</p>
+            
+            <div class="footer-contact-info">
+                <h3>Precisa de mais ajuda?</h3>
+                <p>Entre em contato conosco: <strong>suporte@cinehome.com</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Termos de Uso -->
+<div id="termos" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Termos de Uso</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <p><strong>Última atualização:</strong> Janeiro 2025</p>
+            
+            <h2>1. Aceitação dos Termos</h2>
+            <p>Ao acessar e usar o CineHome, você aceita e concorda em ficar vinculado aos termos e condições deste Acordo.</p>
+            
+            <h2>2. Descrição do Serviço</h2>
+            <p>O CineHome é uma plataforma de avaliação e crítica que oferece análises, classificações e recomendações de filmes e séries. As informações fornecidas são baseadas em dados do TMDB e nossa inteligência artificial.</p>
+            
+            <h2>3. Sua Conta</h2>
+            <p>Você é responsável por manter a confidencialidade de sua conta e senha.</p>
+            <ul>
+                <li>Você deve ter pelo menos 18 anos para usar este serviço</li>
+                <li>Forneça informações precisas e completas durante o registro</li>
+                <li>Mantenha sua senha segura e não a compartilhe</li>
+                <li>Notifique-nos imediatamente sobre qualquer uso não autorizado</li>
+            </ul>
+            
+            <h2>4. Uso Aceitável</h2>
+            <p>Você concorda em NÃO:</p>
+            <ul>
+                <li>Compartilhar sua conta com terceiros</li>
+                <li>Publicar avaliações falsas ou enganosas</li>
+                <li>Fazer engenharia reversa de qualquer parte do serviço</li>
+                <li>Interferir no funcionamento normal da plataforma</li>
+            </ul>
+            
+            <h2>5. Assinatura e Cancelamento</h2>
+            <p>O acesso às funcionalidades premium de avaliação pode requerer assinatura. Você pode cancelar a qualquer momento através das configurações de conta.</p>
+            
+            <h2>6. Rescisão</h2>
+            <p>Reservamo-nos o direito de suspender ou encerrar sua conta se você violar estes termos.</p>
+            
+            <div class="footer-highlight-box">
+                <p><strong>Alterações nos Termos:</strong> Podemos atualizar estes termos periodicamente. Continuando a usar o serviço após alterações, você aceita os novos termos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacidade -->
+<div id="privacidade" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Política de Privacidade</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <p><strong>Última atualização:</strong> Janeiro 2025</p>
+            
+            <h2>Nosso Compromisso com sua Privacidade</h2>
+            <p>No CineHome, levamos sua privacidade a sério. Esta política explica como coletamos, usamos e protegemos suas informações pessoais.</p>
+            
+            <h2>1. Informações que Coletamos</h2>
+            <h3>Informações Pessoais</h3>
+            <ul>
+                <li>Endereço de e-mail</li>
+                <li>Nome (se fornecido)</li>
+                <li>Informações de pagamento (processadas por terceiros seguros)</li>
+            </ul>
+            
+            <h3>Informações de Uso</h3>
+            <ul>
+                <li>Histórico de visualização</li>
+                <li>Informações do dispositivo</li>
+                <li>Endereço IP</li>
+                <li>Cookies e tecnologias similares</li>
+            </ul>
+            
+            <h2>2. Como Usamos suas Informações</h2>
+            <p>Utilizamos suas informações para:</p>
+            <ul>
+                <li>Fornecer e melhorar nosso serviço</li>
+                <li>Personalizar recomendações de conteúdo</li>
+                <li>Comunicar atualizações e ofertas</li>
+                <li>Processar pagamentos</li>
+                <li>Prevenir fraudes e abuso</li>
+            </ul>
+            
+            <h2>3. Compartilhamento de Informações</h2>
+            <p>Não vendemos suas informações pessoais. Podemos compartilhar dados com:</p>
+            <ul>
+                <li>Provedores de serviços (hospedagem, pagamentos)</li>
+                <li>Autoridades legais quando exigido por lei</li>
+                <li>Parceiros de negócios (com seu consentimento)</li>
+            </ul>
+            
+            <h2>4. Segurança</h2>
+            <p>Implementamos medidas de segurança técnicas e organizacionais para proteger suas informações contra acesso não autorizado, alteração ou destruição.</p>
+            
+            <h2>5. Seus Direitos</h2>
+            <p>Você tem o direito de:</p>
+            <ul>
+                <li>Acessar suas informações pessoais</li>
+                <li>Corrigir dados imprecisos</li>
+                <li>Solicitar a exclusão de seus dados</li>
+                <li>Exportar seus dados</li>
+                <li>Optar por não receber comunicações de marketing</li>
+            </ul>
+            
+            <h2>6. Cookies</h2>
+            <p>Usamos cookies para melhorar sua experiência, lembrar preferências e analisar o uso do site. Você pode controlar cookies através das configurações do navegador.</p>
+            
+            <div class="footer-contact-info">
+                <h3>Contato sobre Privacidade</h3>
+                <p>Para questões sobre privacidade, entre em contato: <strong>privacidade@cinehome.com</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Informações Corporativas -->
+<div id="corporativa" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Informações Corporativas</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Sobre o CineHome</h2>
+            <p>O CineHome é uma plataforma líder em avaliação e crítica de filmes e séries, fundada em 2024 com a missão de ajudar espectadores a descobrir e avaliar o melhor conteúdo audiovisual.</p>
+            
+            <h2>Nossa Missão</h2>
+            <p>Fornecer avaliações confiáveis e recomendações personalizadas através de inteligência artificial avançada, análises detalhadas e uma comunidade engajada de cinéfilos.</p>
+            
+            <h2>Nossos Valores</h2>
+            <ul>
+                <li><strong>Inovação:</strong> Constantemente aprimoramos nossas ferramentas de avaliação</li>
+                <li><strong>Qualidade:</strong> Fornecemos análises precisas e imparciais</li>
+                <li><strong>Acessibilidade:</strong> Tornamos as avaliações disponíveis para todos</li>
+                <li><strong>Privacidade:</strong> Protegemos seus dados com máxima segurança</li>
+            </ul>
+            
+            <h2>Informações Legais</h2>
+            <p><strong>Razão Social:</strong> CineHome Reviews Ltd.</p>
+            <p><strong>Registro:</strong> 12.345.678/0001-90</p>
+            <p><strong>Endereço:</strong> Av. Paulista, 1000 - São Paulo, SP, Brasil</p>
+            <p><strong>E-mail corporativo:</strong> contato@cinehome.com</p>
+            
+            <h2>Parcerias</h2>
+            <p>Trabalhamos com as principais bases de dados de filmes e críticos especializados para fornecer as avaliações mais completas e confiáveis aos nossos usuários.</p>
+            
+            <div class="footer-highlight-box">
+                <h3>Carreiras</h3>
+                <p>Interessado em fazer parte da equipe CineHome? Visite nossa página de carreiras: <a href="mailto:rh@cinehome.com">rh@cinehome.com</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Avisos Legais -->
+<div id="avisos" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Avisos Legais</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Direitos Autorais</h2>
+            <p>Todo o conteúdo disponível no CineHome é protegido por direitos autorais. © 2024-2025 CineHome Reviews Ltd. Todos os direitos reservados.</p>
+            
+            <h2>Marcas Registradas</h2>
+            <p>CineHome, o logotipo CineHome e outras marcas relacionadas são marcas comerciais ou marcas registradas da CineHome Reviews Ltd.</p>
+            
+            <h2>Propriedade do Conteúdo</h2>
+            <p>As avaliações e análises publicadas na plataforma são de propriedade do CineHome. Dados de filmes e séries são fornecidos pelo TMDB e estão sujeitos aos seus termos de uso.</p>
+            
+            <h2>Isenção de Responsabilidade</h2>
+            <p>O serviço é fornecido "como está". Não garantimos:</p>
+            <ul>
+                <li>Que o serviço será ininterrupto ou livre de erros</li>
+                <li>A precisão absoluta de avaliações e recomendações</li>
+                <li>A disponibilidade permanente de dados sobre títulos específicos</li>
+            </ul>
+            
+            <h2>Limitação de Responsabilidade</h2>
+            <p>Em nenhuma circunstância o CineHome será responsável por danos indiretos, incidentais, especiais ou consequenciais decorrentes do uso ou incapacidade de usar o serviço.</p>
+            
+            <h2>Propriedade Intelectual</h2>
+            <p>Respeitamos os direitos de propriedade intelectual. Nossas avaliações são originais. Dados de filmes são fornecidos por APIs autorizadas. Para questões de propriedade intelectual: <strong>dmca@cinehome.com</strong></p>
+            
+            <h2>Jurisdição</h2>
+            <p>Estes termos são regidos pelas leis do Brasil. Quaisquer disputas serão resolvidas nos tribunais de São Paulo, SP.</p>
+            
+            <div class="footer-highlight-box">
+                <p><strong>Dúvidas legais?</strong> Entre em contato com nosso departamento jurídico: <a href="mailto:juridico@cinehome.com">juridico@cinehome.com</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Central de Ajuda Legal -->
+<div id="legal" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Central de Ajuda Legal</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Recursos Legais e Conformidade</h2>
+            <p>Esta seção fornece recursos e informações sobre questões legais relacionadas ao uso do CineHome.</p>
+            
+            <h2>Conformidade Regulatória</h2>
+            <p>O CineHome está em conformidade com:</p>
+            <ul>
+                <li>LGPD (Lei Geral de Proteção de Dados) - Brasil</li>
+                <li>GDPR (General Data Protection Regulation) - União Europeia</li>
+                <li>COPPA (Children's Online Privacy Protection Act)</li>
+                <li>DMCA (Digital Millennium Copyright Act)</li>
+            </ul>
+            
+            <h2>Solicitações de Dados</h2>
+            <p>De acordo com LGPD e GDPR, você pode solicitar:</p>
+            <ul>
+                <li><strong>Acesso:</strong> Cópia de todos os seus dados pessoais</li>
+                <li><strong>Correção:</strong> Atualização de informações imprecisas</li>
+                <li><strong>Exclusão:</strong> Remoção de seus dados (direito ao esquecimento)</li>
+                <li><strong>Portabilidade:</strong> Transferência de dados para outro serviço</li>
+                <li><strong>Objeção:</strong> Oposição ao processamento de dados</li>
+            </ul>
+            
+            <h2>Denúncias de Violação</h2>
+            <p>Caso identifique violações, você pode reportar:</p>
+            <ul>
+                <li>Violação de direitos autorais: <strong>dmca@cinehome.com</strong></li>
+                <li>Violação de privacidade: <strong>privacidade@cinehome.com</strong></li>
+                <li>Violação de conduta: <strong>abuso@cinehome.com</strong></li>
+            </ul>
+            
+            <h2>Transparência</h2>
+            <p>Publicamos relatórios trimestrais de transparência detalhando solicitações de dados por autoridades e remoções de conteúdo.</p>
+            
+            <h2>Acessibilidade</h2>
+            <p>Estamos comprometidos em tornar nosso serviço acessível a todos. Se você encontrar barreiras de acessibilidade, informe-nos: <strong>acessibilidade@cinehome.com</strong></p>
+            
+            <div class="footer-contact-info">
+                <h3>Encarregado de Dados (DPO)</h3>
+                <p>Para questões relacionadas à proteção de dados, contate nosso DPO:</p>
+                <p><strong>E-mail:</strong> dpo@cinehome.com</p>
+                <p><strong>Telefone:</strong> +55 (11) 1234-5678</p>
+            </div>
+            
+            <div class="footer-highlight-box">
+                <h3>Tempo de Resposta</h3>
+                <p>Respondemos a todas as solicitações legais dentro de 30 dias, conforme exigido pela LGPD.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<div id="ajuda" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Central de Ajuda</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Bem-vindo à Central de Ajuda do CineHome</h2>
+            <p>Estamos aqui para ajudá-lo a aproveitar ao máximo sua experiência no CineHome. Encontre respostas para as perguntas mais frequentes abaixo.</p>
+            
+            <h3>Conta e Autenticação</h3>
+            <p><strong>Como faço para criar uma conta?</strong></p>
+            <p>Clique em "Entrar" no topo da página e escolha criar uma nova conta com seu e-mail ou usar login social com Google.</p>
+            
+            <p><strong>Esqueci minha senha, como recuperá-la?</strong></p>
+            <p>Na tela de login, clique em "Esqueceu a senha?" e siga as instruções enviadas ao seu e-mail.</p>
+            
+            <h3>Perfis de Usuário</h3>
+            <p><strong>Posso criar múltiplos perfis?</strong></p>
+            <p>Sim! Você pode criar até 5 perfis diferentes para cada conta, ideal para toda a família.</p>
+            
+            <p><strong>Como protejo meu perfil com PIN?</strong></p>
+            <p>Nas configurações do perfil, ative a proteção por PIN e escolha um código de 4 dígitos.</p>
+            
+            <h3>Navegação e Conteúdo</h3>
+            <p><strong>Como faço para encontrar filmes específicos?</strong></p>
+            <p>Use a barra de pesquisa no topo da página ou navegue pelas categorias disponíveis.</p>
+            
+            <p><strong>O que significa a API do TMDB?</strong></p>
+            <p>O TMDB (The Movie Database) fornece informações atualizadas sobre filmes e séries. Configure sua chave de API para acessar o catálogo completo.</p>
+            
+            <div class="footer-contact-info">
+                <h3>Precisa de Mais Ajuda?</h3>
+                <p><strong>E-mail:</strong> suporte@cinehome.com</p>
+                <p><strong>Telefone:</strong> +55 (11) 1234-5678</p>
+                <p><strong>Horário:</strong> Segunda a Sexta, 9h às 18h (horário de Brasília)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Termos de Uso -->
+<div id="termos" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Termos de Uso</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Termos de Uso do CineHome</h2>
+            <p><em>Última atualização: 4 de novembro de 2025</em></p>
+            
+            <h3>1. Aceitação dos Termos</h3>
+            <p>Ao acessar e usar o CineHome, você concorda em cumprir e estar vinculado aos seguintes termos e condições de uso.</p>
+            
+            <h3>2. Uso do Serviço</h3>
+            <p>O CineHome é uma plataforma de streaming de entretenimento. Você concorda em usar o serviço apenas para fins legais e de acordo com estes Termos.</p>
+            
+            <h3>3. Conta de Usuário</h3>
+            <p>Para acessar determinadas funcionalidades, você deve criar uma conta. Você é responsável por:</p>
+            <ul>
+                <li>Manter a confidencialidade de sua senha</li>
+                <li>Todas as atividades que ocorrem em sua conta</li>
+                <li>Notificar-nos imediatamente sobre qualquer uso não autorizado</li>
+            </ul>
+            
+            <h3>4. Perfis de Usuário</h3>
+            <p>Você pode criar até 5 perfis por conta. Cada perfil pode ter configurações personalizadas, incluindo proteção por PIN.</p>
+            
+            <h3>5. Conteúdo e Propriedade Intelectual</h3>
+            <p>Todo o conteúdo disponível no CineHome, incluindo textos, gráficos, logos e software, é propriedade do CineHome ou de seus licenciadores e é protegido por leis de direitos autorais.</p>
+            
+            <h3>6. Proibições</h3>
+            <p>Você concorda em NÃO:</p>
+            <ul>
+                <li>Compartilhar sua conta com terceiros não autorizados</li>
+                <li>Usar o serviço para fins comerciais sem autorização</li>
+                <li>Tentar acessar áreas restritas do sistema</li>
+                <li>Interferir com a segurança do serviço</li>
+            </ul>
+            
+            <div class="footer-highlight-box">
+                <h3>Importante</h3>
+                <p>O CineHome reserva-se o direito de modificar ou descontinuar o serviço a qualquer momento, com ou sem aviso prévio.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Política de Privacidade -->
+<div id="privacidade" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Política de Privacidade</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Política de Privacidade do CineHome</h2>
+            <p><em>Última atualização: 4 de novembro de 2025</em></p>
+            <p>Em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei 13.709/2018)</p>
+            
+            <h3>1. Informações que Coletamos</h3>
+            <p><strong>Informações de Cadastro:</strong></p>
+            <ul>
+                <li>Nome completo</li>
+                <li>Endereço de e-mail</li>
+                <li>Senha criptografada</li>
+                <li>Data de criação da conta</li>
+            </ul>
+            
+            <p><strong>Informações de Perfil:</strong></p>
+            <ul>
+                <li>Avatares selecionados</li>
+                <li>Configurações de PIN (armazenadas criptografadas)</li>
+                <li>Preferências de visualização</li>
+            </ul>
+            
+            <p><strong>Dados de Uso:</strong></p>
+            <ul>
+                <li>Histórico de visualização</li>
+                <li>Pesquisas realizadas</li>
+                <li>Tempo de uso da plataforma</li>
+                <li>Dispositivos utilizados</li>
+            </ul>
+            
+            <h3>2. Como Usamos suas Informações</h3>
+            <p>Utilizamos seus dados para:</p>
+            <ul>
+                <li>Fornecer e melhorar nossos serviços</li>
+                <li>Personalizar recomendações de conteúdo</li>
+                <li>Comunicar atualizações e novidades</li>
+                <li>Garantir a segurança da plataforma</li>
+                <li>Cumprir obrigações legais</li>
+            </ul>
+            
+            <h3>3. Compartilhamento de Dados</h3>
+            <p>Não vendemos seus dados pessoais. Podemos compartilhar informações apenas com:</p>
+            <ul>
+                <li>Provedores de serviços essenciais (hospedagem, análise)</li>
+                <li>Autoridades legais, quando exigido por lei</li>
+                <li>Parceiros comerciais, com seu consentimento explícito</li>
+            </ul>
+            
+            <h3>4. Seus Direitos (LGPD)</h3>
+            <p>Você tem direito a:</p>
+            <ul>
+                <li><strong>Acesso:</strong> Solicitar cópia dos seus dados</li>
+                <li><strong>Correção:</strong> Atualizar dados incorretos</li>
+                <li><strong>Exclusão:</strong> Solicitar remoção dos seus dados</li>
+                <li><strong>Portabilidade:</strong> Receber seus dados em formato estruturado</li>
+                <li><strong>Revogação:</strong> Retirar consentimento a qualquer momento</li>
+            </ul>
+            
+            <h3>5. Segurança dos Dados</h3>
+            <p>Implementamos medidas técnicas e organizacionais para proteger seus dados:</p>
+            <ul>
+                <li>Criptografia de ponta a ponta para senhas e PINs</li>
+                <li>Conexões HTTPS seguras</li>
+                <li>Monitoramento contínuo de segurança</li>
+                <li>Backups regulares e seguros</li>
+            </ul>
+            
+            <h3>6. Armazenamento de Dados</h3>
+            <p>Seus dados são armazenados em servidores seguros localizados no Brasil, em conformidade com a LGPD. Os dados são mantidos pelo tempo necessário para os fins descritos nesta política ou conforme exigido por lei.</p>
+            
+            <h3>7. Cookies e Tecnologias Similares</h3>
+            <p>Utilizamos cookies e localStorage para:</p>
+            <ul>
+                <li>Manter você autenticado</li>
+                <li>Lembrar suas preferências</li>
+                <li>Analisar o uso da plataforma</li>
+                <li>Personalizar sua experiência</li>
+            </ul>
+            
+            <div class="footer-highlight-box">
+                <h3>Encarregado de Proteção de Dados (DPO)</h3>
+                <p>Para exercer seus direitos ou esclarecer dúvidas sobre privacidade, entre em contato com nosso DPO:</p>
+                <p><strong>E-mail:</strong> dpo@cinehome.com</p>
+                <p><strong>Telefone:</strong> +55 (11) 1234-5678</p>
+            </div>
+            
+            <div class="footer-highlight-box">
+                <h3>Tempo de Resposta</h3>
+                <p>Respondemos a todas as solicitações legais dentro de 30 dias, conforme exigido pela LGPD.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Informações Corporativas -->
+<div id="corporativa" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Informações Corporativas</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Sobre a CineHome Brasil</h2>
+            <p><em>Líder em entretenimento digital no Brasil</em></p>
+            
+            <h3>Nossa Empresa</h3>
+            <p><strong>Razão Social:</strong> CineHome Entretenimento Digital LTDA</p>
+            <p><strong>CNPJ:</strong> 12.345.678/0001-90</p>
+            <p><strong>Fundação:</strong> 2020</p>
+            <p><strong>Sede:</strong> São Paulo, SP - Brasil</p>
+            
+            <h3>Nossa Missão</h3>
+            <p>Democratizar o acesso ao entretenimento de qualidade, proporcionando experiências únicas de streaming para toda a família brasileira.</p>
+            
+            <h3>Nossos Valores</h3>
+            <ul>
+                <li><strong>Inovação:</strong> Buscamos constantemente novas tecnologias e recursos</li>
+                <li><strong>Qualidade:</strong> Oferecemos conteúdo cuidadosamente selecionado</li>
+                <li><strong>Acessibilidade:</strong> Plataforma intuitiva para todas as idades</li>
+                <li><strong>Transparência:</strong> Comunicação clara com nossos usuários</li>
+                <li><strong>Segurança:</strong> Proteção de dados e privacidade em primeiro lugar</li>
+            </ul>
+            
+            <h3>Conquistas</h3>
+            <ul>
+                <li>Mais de 5 milhões de usuários ativos</li>
+                <li>Catálogo com mais de 10.000 títulos</li>
+                <li>Disponível em todo o território nacional</li>
+                <li>Certificação ISO 27001 em Segurança da Informação</li>
+                <li>Prêmio Melhor Plataforma de Streaming Brasil 2024</li>
+            </ul>
+            
+            <div class="footer-contact-info">
+                <h3>Contato Institucional</h3>
+                <p><strong>E-mail:</strong> corporativo@cinehome.com.br</p>
+                <p><strong>Imprensa:</strong> imprensa@cinehome.com.br</p>
+                <p><strong>Parcerias:</strong> parcerias@cinehome.com.br</p>
+                <p><strong>Telefone:</strong> +55 (11) 3456-7890</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Avisos Legais -->
+<div id="avisos" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Avisos Legais</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Avisos Legais e Isenções de Responsabilidade</h2>
+            <p><em>Última atualização: 4 de novembro de 2025</em></p>
+            
+            <h3>1. Propriedade Intelectual</h3>
+            <p>Todo o conteúdo disponibilizado no CineHome, incluindo mas não limitado a:</p>
+            <ul>
+                <li>Filmes, séries e outros materiais audiovisuais</li>
+                <li>Textos, gráficos, logotipos e ícones</li>
+                <li>Software, código-fonte e interface do usuário</li>
+                <li>Marcas registradas e elementos de design</li>
+            </ul>
+            <p>É protegido por leis de direitos autorais brasileiras e internacionais. Todos os direitos são reservados aos seus respectivos proprietários.</p>
+            
+            <h3>2. Licenciamento de Conteúdo</h3>
+            <p>O CineHome opera sob licenças legítimas obtidas diretamente de distribuidores, estúdios e detentores de direitos. Informações sobre licenciamento podem ser obtidas através do e-mail: licenciamento@cinehome.com.br</p>
+            
+            <h3>3. Uso Pessoal e Não Comercial</h3>
+            <p>O acesso ao CineHome é concedido exclusivamente para uso pessoal e não comercial. É estritamente proibido:</p>
+            <ul>
+                <li>Reproduzir, distribuir ou transmitir conteúdo sem autorização</li>
+                <li>Usar conteúdo para fins comerciais ou lucrativos</li>
+                <li>Fazer download não autorizado de materiais protegidos</li>
+                <li>Remover avisos de direitos autorais ou marcas registradas</li>
+            </ul>
+            
+            <h3>4. Classificação Indicativa</h3>
+            <p>O CineHome segue rigorosamente as diretrizes do Ministério da Justiça para classificação indicativa de conteúdo. É responsabilidade dos pais e responsáveis monitorar o acesso de menores ao conteúdo apropriado para sua faixa etária.</p>
+            
+            <h3>5. Disponibilidade de Conteúdo</h3>
+            <p>O catálogo de conteúdo está sujeito a alterações sem aviso prévio devido a:</p>
+            <ul>
+                <li>Expirações de acordos de licenciamento</li>
+                <li>Restrições geográficas ou territoriais</li>
+                <li>Decisões editoriais da plataforma</li>
+            </ul>
+            
+            <h3>6. Isenção de Garantias</h3>
+            <p>O serviço é fornecido "como está" e "conforme disponível". O CineHome não garante que:</p>
+            <ul>
+                <li>O serviço será ininterrupto ou livre de erros</li>
+                <li>Defeitos serão corrigidos imediatamente</li>
+                <li>O conteúdo estará sempre disponível</li>
+            </ul>
+            
+            <div class="footer-highlight-box">
+                <h3>Proteção contra Pirataria</h3>
+                <p>O CineHome adota medidas tecnológicas rigorosas contra pirataria e uso não autorizado. Violações podem resultar em:</p>
+                <ul>
+                    <li>Suspensão ou cancelamento da conta</li>
+                    <li>Ações legais civis e criminais</li>
+                    <li>Comunicação às autoridades competentes</li>
+                </ul>
+            </div>
+            
+            <div class="footer-highlight-box">
+                <h3>Denúncia de Violações</h3>
+                <p>Se você identificar conteúdo que viola direitos autorais ou outras violações legais, entre em contato:</p>
+                <p><strong>E-mail:</strong> juridico@cinehome.com.br</p>
+                <p><strong>Prazo de resposta:</strong> 48 horas úteis</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Centro de Ajuda Legal -->
+<div id="legal" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Centro de Ajuda Legal</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Central de Assistência Jurídica</h2>
+            <p>Bem-vindo ao Centro de Ajuda Legal do CineHome. Aqui você encontra informações sobre seus direitos, como exercê-los e os procedimentos legais relacionados ao uso de nossa plataforma.</p>
+            
+            <h3>Direitos do Consumidor (CDC)</h3>
+            <p>Como usuário do CineHome, você possui direitos garantidos pelo Código de Defesa do Consumidor (Lei nº 8.078/90):</p>
+            <ul>
+                <li><strong>Direito à informação clara e adequada</strong> sobre produtos e serviços</li>
+                <li><strong>Proteção contra publicidade enganosa</strong> ou abusiva</li>
+                <li><strong>Direito de cancelamento</strong> dentro de 7 dias após a contratação (direito de arrependimento)</li>
+                <li><strong>Direito à revisão de cláusulas contratuais</strong> abusivas</li>
+            </ul>
+            
+            <h3>Lei Geral de Proteção de Dados (LGPD)</h3>
+            <p>Seus direitos sob a LGPD (Lei nº 13.709/18):</p>
+            <ul>
+                <li><strong>Confirmação e acesso:</strong> Saber se tratamos seus dados e acessá-los</li>
+                <li><strong>Correção:</strong> Solicitar correção de dados incompletos ou incorretos</li>
+                <li><strong>Anonimização, bloqueio ou eliminação:</strong> Dados desnecessários ou tratados irregularmente</li>
+                <li><strong>Portabilidade:</strong> Receber dados em formato estruturado</li>
+                <li><strong>Informação sobre compartilhamento:</strong> Saber com quem compartilhamos seus dados</li>
+                <li><strong>Revogação de consentimento:</strong> Retirar autorização a qualquer momento</li>
+            </ul>
+            
+            <h3>Como Exercer Seus Direitos</h3>
+            <p><strong>1. Solicitações LGPD:</strong></p>
+            <p>E-mail: dpo@cinehome.com.br</p>
+            <p>Telefone: +55 (11) 1234-5678</p>
+            <p>Prazo de resposta: Até 15 dias úteis</p>
+            
+            <p><strong>2. Reclamações e Contestações:</strong></p>
+            <p>E-mail: ouvidoria@cinehome.com.br</p>
+            <p>Prazo de resposta: Até 5 dias úteis</p>
+            
+            <p><strong>3. Demandas Judiciais:</strong></p>
+            <p>E-mail: juridico@cinehome.com.br</p>
+            <p>Prazo de resposta: Conforme determinação judicial</p>
+            
+            <h3>Resolução de Conflitos</h3>
+            <p>Antes de recorrer a medidas judiciais, encorajamos a resolução amigável de conflitos:</p>
+            <ul>
+                <li><strong>Passo 1:</strong> Entre em contato com nosso Suporte (suporte@cinehome.com)</li>
+                <li><strong>Passo 2:</strong> Escale para a Ouvidoria se não houver resolução</li>
+                <li><strong>Passo 3:</strong> Considere mediação ou arbitragem</li>
+                <li><strong>Passo 4:</strong> Processo judicial como último recurso</li>
+            </ul>
+            
+            <h3>Órgãos de Defesa</h3>
+            <p>Você também pode recorrer a órgãos externos:</p>
+            <ul>
+                <li><strong>Procon:</strong> Proteção e defesa do consumidor - www.procon.sp.gov.br</li>
+                <li><strong>Consumidor.gov.br:</strong> Plataforma oficial do governo federal</li>
+                <li><strong>ANPD:</strong> Autoridade Nacional de Proteção de Dados - www.gov.br/anpd</li>
+                <li><strong>Ministério Público:</strong> Para questões de interesse coletivo</li>
+            </ul>
+            
+            <div class="footer-contact-info">
+                <h3>Departamento Jurídico</h3>
+                <p><strong>Endereço:</strong> Av. Paulista, 1000 - Sala 501 - São Paulo/SP - CEP 01310-100</p>
+                <p><strong>E-mail:</strong> juridico@cinehome.com.br</p>
+                <p><strong>Telefone:</strong> +55 (11) 3456-7899</p>
+                <p><strong>Horário:</strong> Segunda a Sexta, 9h às 18h</p>
+            </div>
+            
+            <div class="footer-highlight-box">
+                <h3>Documentos Necessários</h3>
+                <p>Ao entrar em contato com nosso departamento jurídico, tenha em mãos:</p>
+                <ul>
+                    <li>Número de protocolo (se houver atendimento prévio)</li>
+                    <li>CPF cadastrado na plataforma</li>
+                    <li>E-mail de cadastro</li>
+                    <li>Descrição detalhada da solicitação</li>
+                    <li>Documentos comprobatórios (se aplicável)</li>
+                </ul>
+            </div>
+            
+            <div class="footer-highlight-box">
+                <h3>Importante</h3>
+                <p>Este Centro de Ajuda Legal não substitui assessoria jurídica profissional. Para questões legais complexas, recomendamos consultar um advogado.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script src="data.js"></script>
+<script src="categories-data.js" defer></script>
+<script src="footer-content.js"></script>
+<script src="search.js"></script>
+<script src="profile-menu.js" defer></script>
+<script src="notifications.js"></script>
+<script src="confirm-modal.js"></script>
+<script src="favoritos.js"></script>
+<script src="user-reviews.js" defer></script>
+<script src="movie-details.js"></script>
+<script src="footer.js"></script>
+
+<script>
+  // Proteger a página
+  if (!auth.requireAuth()) {
+    // A função requireAuth já faz o redirect
+  } else {
+    const currentProfile = localStorage.getItem('cinehome_current_profile');
+    if (!currentProfile) {
+      window.location.href = 'profil.html';
+    }
+  }
+</script>
+
+</body>
+</html>

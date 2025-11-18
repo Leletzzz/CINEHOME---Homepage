@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<!-- Página principal: estrutura semântica, carrosséis e integração TMDB. -->
+<html lang="pt-br">
+<head>
+    <!-- Metadados e responsividade -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/favicon.ico"/>
+    <title>CineHome | Seu cinema em casa</title>
+    <!-- Estilos principais da página -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="footer-content.css">
+    <link rel="stylesheet" href="search-results.css">
+    <link rel="stylesheet" href="categories.css">
+    <link rel="stylesheet" href="video-modal.css">
+    <link rel="stylesheet" href="profile-menu.css">
+    <link rel="stylesheet" href="notifications.css">
+    <link rel="stylesheet" href="confirm-modal.css">
+    <link rel="stylesheet" href="favoritos.css">
+    <link rel="stylesheet" href="movie-details-modal.css">
+
+</head>
+<body>
+
+<!-- Container principal: cabeçalho, capa e carrosséis -->
+<div class="container">
+    <!-- Cabeçalho com logotipo, barra de pesquisa e ações (login/configurações) -->
+    <div class="site-header" role="banner" aria-label="Cabeçalho">
+        <a href="#" class="brand-logo" aria-label="CineHome - Página inicial">
+          <span class="brand-part brand-part-cine">CINE</span><span class="brand-part brand-part-home">HOME</span>
+        </a>
+        
+        <!-- Barra de pesquisa -->
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Pesquisar filmes..." aria-label="Pesquisar filmes" data-i18n="search.placeholder">
+            <button class="search-button" aria-label="Buscar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="header-actions">
+          <!-- Favoritos Menu -->
+          <div class="favoritos-menu-container">
+            <button class="favoritos-btn" id="favoritos-btn" aria-label="Meus Favoritos">
+                <style>
+                .heart-icon path {
+                    fill: none;
+                    stroke: white;
+                    stroke-width: 1.8;
+                    transition: fill 0.25s ease, stroke 0.25s ease;
+                }
+                .heart-icon:hover path {
+                    fill: white;
+                    stroke: white;
+                }
+                </style>
+                <svg class="heart-icon" viewBox="0 0 24 24" width="26" height="26" xmlns="http://www.w3.org/2000/svg"> <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 c1.74 0 3.41 0.81 4.5 2.09 C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/> </svg>
+              <span class="favoritos-count" id="favoritos-count">0</span>
+            </button>
+          </div>
+          
+          <!-- Profile Menu -->
+          <div class="profile-menu-container">
+            <button class="profile-avatar-btn" id="profile-avatar-btn" aria-label="Menu de perfil" aria-haspopup="true" aria-expanded="false">
+              <img src="imagens/avatar-01.svg" alt="Avatar do usuário" class="profile-avatar-img" id="profile-avatar-img">
+              <svg class="profile-dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            
+            <!-- Dropdown Menu -->
+            <div class="profile-dropdown" id="profile-dropdown" aria-hidden="true">
+              <!-- Profile List Section -->
+              <div class="profile-list">
+                <button class="profile-item" data-profile="01">
+                  <img src="imagens/avatar-01.svg" alt="Perfil 01" class="profile-item-img">
+                  <span class="profile-item-number">01</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+                
+                <button class="profile-item" data-profile="02">
+                  <img src="imagens/avatar-02.svg" alt="Perfil 02" class="profile-item-img">
+                  <span class="profile-item-number">02</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+                
+                <button class="profile-item" data-profile="03">
+                  <img src="imagens/avatar-03.svg" alt="Perfil 03" class="profile-item-img">
+                  <span class="profile-item-number">03</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+                
+                <button class="profile-item" data-profile="04">
+                  <img src="imagens/avatar-04.svg" alt="Perfil 04" class="profile-item-img">
+                  <span class="profile-item-number">04</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+                
+                <button class="profile-item" data-profile="05">
+                  <img src="imagens/avatar-05.svg" alt="Perfil 05" class="profile-item-img">
+                  <span class="profile-item-number">05</span>
+                  <svg class="profile-unlock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  </svg>
+                </button>
+              </div>
+              
+              <!-- Divider -->
+              <div class="profile-divider"></div>
+              
+              <!-- Menu Options -->
+              <div class="profile-options">
+                <button class="profile-option" id="manage-profiles">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  <span>Gerenciar perfis</span>
+                </button>
+                
+                <button class="profile-option" id="exit-profile">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  <span>Sair do perfil</span>
+                </button>
+                
+                <button class="profile-option" id="account-settings">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <span>Conta</span>
+                </button>
+                
+                <button class="profile-option" id="help-center">
+                  <svg class="profile-option-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                  <span>Assistente Virtual <sup style="background: #EF4444; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; margin-left: 6px;">NOVO</sup></span>
+                </button>
+              </div>
+              
+              <!-- Divider -->
+              <div class="profile-divider"></div>
+              
+              <!-- Logout Button -->
+              <div class="profile-logout">
+                <button class="profile-logout-btn" id="btn-logout">
+                  <span>Sair da CINEHOME</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <button id="btn-open-settings" class="btn btn-secondary btn-settings" aria-haspopup="dialog" aria-controls="tmdb-settings-modal" aria-label="Configurar TMDB" data-i18n="btn.settings" data-full-text="Configurar TMDB" data-short-text="Confi&#10;gurado">
+            Configurar TMDB
+          </button>
+        </div>
+      </div>
+
+    <!-- Capa/Hero com slider, navegação e CTA -->
+    <section class="hero has-capa" aria-label="Destaques">
+        <!-- Faixa de slides do hero; um ativo por vez -->
+        <div class="hero-slider" id="hero-slider">
+            <div class="hero-slide is-active" data-index="0">
+                <img class="hero-image" src="https://image.tmdb.org/t/p/original/4GQfEI0n0V2lxh9H9n1tFoZT3zh.jpg" alt="Destaque: Oppenheimer" loading="lazy" />
+                <div class="hero-gradient"></div>
+                <div class="hero-content">
+                    <h2 class="hero-title">Oppenheimer</h2>
+                    <p class="hero-description">A épica história do físico J. Robert Oppenheimer e o desenvolvimento da bomba atômica.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" aria-label="Assistir Oppenheimer agora">Assistir agora</button>
+                        <button class="btn btn-secondary" aria-label="Ver detalhes de Oppenheimer">Detalhes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" data-index="1">
+                <img class="hero-image" src="https://image.tmdb.org/t/p/original/2QL5j6mB4ZpyBcVr0WO9H9MQGB8.jpg" alt="Destaque: Duna Parte Dois" loading="lazy" />
+                <div class="hero-gradient"></div>
+                <div class="hero-content">
+                    <h2 class="hero-title">Duna: Parte Dois</h2>
+                    <p class="hero-description">Paul Atreides se une aos Fremen em uma jornada de vingança e destino no deserto de Arrakis.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" aria-label="Assistir Duna Parte Dois">Assistir agora</button>
+                        <button class="btn btn-secondary" aria-label="Ver detalhes de Duna Parte Dois">Detalhes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" data-index="2">
+                <img class="hero-image" src="https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg" alt="Destaque: Vingadores Guerra Infinita" loading="lazy" />
+                <div class="hero-gradient"></div>
+                <div class="hero-content">
+                    <h2 class="hero-title">Vingadores: Guerra Infinita</h2>
+                    <p class="hero-description">Os Vingadores enfrentam Thanos em uma batalha pelo destino do universo.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" aria-label="Assistir Guerra Infinita">Assistir agora</button>
+                        <button class="btn btn-secondary" aria-label="Ver detalhes de Guerra Infinita">Detalhes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" data-index="3">
+                <img class="hero-image" src="https://image.tmdb.org/t/p/original/8YFL5QQVPy3AgrEQxNYVSgiPEbe.jpg" alt="Destaque: Top Gun Maverick" loading="lazy" />
+                <div class="hero-gradient"></div>
+                <div class="hero-content">
+                    <h2 class="hero-title">Top Gun: Maverick</h2>
+                    <p class="hero-description">Maverick enfrenta o passado enquanto treina uma nova geração de pilotos.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" aria-label="Assistir Top Gun Maverick">Assistir agora</button>
+                        <button class="btn btn-secondary" aria-label="Ver detalhes de Top Gun Maverick">Detalhes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" data-index="4">
+                <img class="hero-image" src="https://image.tmdb.org/t/p/original/9n2tJBplPbgR2ca05hS5CKXwP2c.jpg" alt="Destaque: Super Mario Bros O Filme" loading="lazy" />
+                <div class="hero-gradient"></div>
+                <div class="hero-content">
+                    <h2 class="hero-title">Super Mario Bros. O Filme</h2>
+                    <p class="hero-description">Mario e Luigi embarcam em uma aventura épica no Reino dos Cogumelos.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" aria-label="Assistir Super Mario Bros">Assistir agora</button>
+                        <button class="btn btn-secondary" aria-label="Ver detalhes de Super Mario Bros">Detalhes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Controles laterais do hero (prev/next) -->
+        <div class="hero-nav" aria-hidden="false">
+            <button class="nav-button left" aria-label="Slide anterior" data-hero-action="prev">&#10094;</button>
+            <button class="nav-button right" aria-label="Próximo slide" data-hero-action="next">&#10095;</button>
+        </div>
+        <!-- Dots acessíveis para navegação por slide -->
+        <div class="hero-dots" id="hero-dots" aria-label="Navegação de slides"></div>
+        <!-- Barra de progresso do auto-play -->
+        <div class="hero-progress" aria-hidden="true"><div class="fill" id="hero-progress-fill"></div></div>
+        <!-- CTA: botão principal -->
+        <div id="hero-cta" class="hero-cta" role="region" aria-label="Ação principal">
+            <button class="btn btn-primary btn-large" type="button" id="hero-cta-button" data-i18n="hero.cta">Assista já</button>
+        </div>
+        <!-- Curva decorativa inferior da capa -->
+        <div class="hero-curve" aria-hidden="true"></div>
+    </section>
+
+    <!-- Barra de navegação por categorias -->
+    <nav class="category-nav" role="navigation" aria-label="Navegação por categorias">
+        <div class="category-nav-container">
+            <a href="#home" class="category-link" data-category="home" data-i18n="nav.home">PÁGINA INICIAL</a>
+            <a href="#suspense" class="category-link" data-category="suspense" data-i18n="nav.suspense">SUSPENSE</a>
+            <a href="#comedia" class="category-link" data-category="comedia" data-i18n="nav.comedy">COMÉDIA</a>
+            <a href="#acao" class="category-link" data-category="acao" data-i18n="nav.action">AÇÃO</a>
+            <a href="#terror" class="category-link" data-category="terror" data-i18n="nav.horror">TERROR</a>
+            <a href="#drama" class="category-link" data-category="drama" data-i18n="nav.drama">DRAMA</a>
+            <a href="#ficcao" class="category-link" data-category="ficcao" data-i18n="nav.fiction">FICÇÃO</a>
+            <a href="#misterio" class="category-link" data-category="misterio" data-i18n="nav.mystery">MISTÉRIO</a>
+        </div>
+    </nav>
+
+    <!-- Seção de conteúdo: Filmes Populares -->
+    <div class="section">
+        <h2 class="section-title" data-i18n="section.popular">Filmes Populares</h2>
+        <!-- Wrapper do carrossel, controlado via JS por data-attributes -->
+        <div class="carousel-wrapper" data-carousel="popular">
+            <!-- Trilho do carrossel; os cards rolam horizontalmente -->
+            <div class="carousel" id="carousel-popular">
+                <button class="movie-card" type="button" aria-label="Filme: Vingadores Ultimato" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg" alt="Vingadores: Ultimato" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Vingadores: Ultimato</div>
+                        <div class="movie-year">2019</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>8.4</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Filme: Homem-Aranha" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg" alt="Homem-Aranha: Sem Volta Para Casa" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Homem-Aranha: Sem Volta Para Casa</div>
+                        <div class="movie-year">2021</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>8.2</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Filme: Doutor Estranho" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg" alt="Doutor Estranho no Multiverso da Loucura" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Doutor Estranho no Multiverso da Loucura</div>
+                        <div class="movie-year">2022</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>6.9</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Filme: Pantera Negra" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg" alt="Pantera Negra" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Pantera Negra</div>
+                        <div class="movie-year">2018</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>7.3</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Filme: Thor Ragnarok" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg" alt="Thor: Ragnarok" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Thor: Ragnarok</div>
+                        <div class="movie-year">2017</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>7.9</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Filme: Guardiões da Galáxia" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg" alt="Guardiões da Galáxia" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Guardiões da Galáxia</div>
+                        <div class="movie-year">2014</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>8.0</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="movie-card" type="button" aria-label="Filme: Avatar: O Caminho da Água" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg" alt="Avatar: O Caminho da Água" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Avatar: O Caminho da Água</div>
+                        <div class="movie-year">2022</div>
+                        <div class="movie-rating"><span class="stars">★★★★☆</span><span>7.6</span></div>
+                    </div>
+                </button>
+                <button class="movie-card" type="button" aria-label="Filme: John Wick 4" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg" alt="John Wick 4" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">John Wick 4: Baba Yaga</div>
+                        <div class="movie-year">2023</div>
+                        <div class="movie-rating"><span class="stars">★★★★★</span><span>7.7</span></div>
+                    </div>
+                </button>
+                <button class="movie-card" type="button" aria-label="Filme: Duna" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg" alt="Duna" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Duna</div>
+                        <div class="movie-year">2021</div>
+                        <div class="movie-rating"><span class="stars">★★★★★</span><span>8.0</span></div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Filme: Capitão América" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg" alt="Capitão América: Guerra Civil" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Capitão América: Guerra Civil</div>
+                        <div class="movie-year">2016</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>7.8</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Filme: Homem de Ferro" data-carousel-id="carousel-popular">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg" alt="Homem de Ferro" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Homem de Ferro</div>
+                        <div class="movie-year">2008</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>7.9</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+            
+        <!-- Botões de navegação do carrossel -->
+        <button class="nav-button left" 
+            data-action="nav-left" data-target="carousel-popular"
+            aria-label="Navegar para filmes anteriores" aria-controls="carousel-popular"
+                    tabindex="0">
+                &#10094;
+            </button>
+            
+        <button class="nav-button right" 
+            data-action="nav-right" data-target="carousel-popular"
+            aria-label="Navegar para próximos filmes" aria-controls="carousel-popular"
+                    tabindex="0">
+                &#10095;
+            </button>
+            
+            <!-- Barra de progresso da posição do carrossel -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-popular"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de conteúdo: Séries em Alta -->
+    <div class="section">
+        <h2 class="section-title" data-i18n="section.series">Séries em Alta</h2>
+        <!-- Wrapper do carrossel de séries -->
+        <div class="carousel-wrapper" data-carousel="series">
+            <!-- Trilho do carrossel de séries -->
+            <div class="carousel" id="carousel-series">
+                <button class="movie-card" type="button" aria-label="Série: Stranger Things" data-carousel-id="carousel-series">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg" alt="Stranger Things" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Stranger Things</div>
+                        <div class="movie-year">2016-2025</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>8.7</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Série: The Witcher" data-carousel-id="carousel-series">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/7vjaCdMw15FEbXyLQTVa04URsPm.jpg" alt="The Witcher" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">The Witcher</div>
+                        <div class="movie-year">2019-presente</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>8.2</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Série: La Casa de Papel" data-carousel-id="carousel-series">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7C0cpMy6AkWSGECDyWPrw93WJHu.jpg" alt="La Casa de Papel" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">La Casa de Papel</div>
+                        <div class="movie-year">2017-2021</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>8.3</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Série: Dark" data-carousel-id="carousel-series">
+                    <img class="movie-image" src="https://images-eu.ssl-images-amazon.com/images/I/617WfJD90eL.jpg" alt="Dark" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Dark</div>
+                        <div class="movie-year">2017-2020</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>8.8</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Série: Breaking Bad" data-carousel-id="carousel-series">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg" alt="Breaking Bad" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">Breaking Bad</div>
+                        <div class="movie-year">2008-2013</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>9.5</span>
+                        </div>
+                    </div>
+                </button>
+                
+                <button class="movie-card" type="button" aria-label="Série: The Crown" data-carousel-id="carousel-series">
+                    <img class="movie-image" src="https://www.themoviedb.org/t/p/original/hqmDLY8BSuHmldBuuUwNNt8L45G.jpg" alt="The Crown" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">The Crown</div>
+                        <div class="movie-year">2016-2023</div>
+                        <div class="movie-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>8.6</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="movie-card" type="button" aria-label="Série: The Mandalorian" data-carousel-id="carousel-series">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/sWgBv7LV2PRoQgkxwlibdGXKz1S.jpg" alt="The Mandalorian" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">The Mandalorian</div>
+                        <div class="movie-year">2019-presente</div>
+                        <div class="movie-rating"><span class="stars">★★★★★</span><span>8.5</span></div>
+                    </div>
+                </button>
+                <button class="movie-card" type="button" aria-label="Série: The Last of Us" data-carousel-id="carousel-series">
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg" alt="The Last of Us" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">The Last of Us</div>
+                        <div class="movie-year">2023-presente</div>
+                        <div class="movie-rating"><span class="stars">★★★★★</span><span>8.7</span></div>
+                    </div>
+                </button>
+                <button class="movie-card" type="button" aria-label="Série: House of the Dragon" data-carousel-id="carousel-series">
+                    <img class="movie-image" src="https://www.ixpap.com/images/2024/07/House-of-the-Dragon-Wallpaper-36-600x1067.jpg" alt="House of the Dragon" loading="lazy">
+                    <div class="movie-info">
+                        <div class="movie-title">House of the Dragon</div>
+                        <div class="movie-year">2022-presente</div>
+                        <div class="movie-rating"><span class="stars">★★★★☆</span><span>8.4</span></div>
+                    </div>
+                </button>
+            </div>
+            
+        <!-- Botões de navegação do carrossel -->
+        <button class="nav-button left" 
+            data-action="nav-left" data-target="carousel-series"
+            aria-label="Navegar para séries anteriores" aria-controls="carousel-series"
+                    tabindex="0">
+                &#10094;
+            </button>
+            
+        <button class="nav-button right" 
+            data-action="nav-right" data-target="carousel-series"
+            aria-label="Navegar para próximas séries" aria-controls="carousel-series"
+                    tabindex="0">
+                &#10095;
+            </button>
+            
+            <!-- Barra de progresso de séries -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-series"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Configuração TMDB -->
+<!-- Modal inicia oculto; exibido/ocultado via JavaScript -->
+<div class="modal-overlay" id="tmdb-settings-modal" role="dialog" aria-modal="true" aria-labelledby="tmdb-modal-title" hidden>
+    <div class="modal-content" role="document">
+        <h3 id="tmdb-modal-title" data-i18n="modal.title">Configurar API do TMDB</h3>
+        <p class="modal-text" data-i18n="modal.description">Insira sua chave da API do <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a> para carregar catálogos reais. A chave será salva apenas no seu navegador (localStorage).</p>
+        <label for="tmdb-key-input" class="modal-label" data-i18n="modal.apiKeyLabel">API Key</label>
+        <!-- Persistida em localStorage; também pode ser lida de ?tmdb_api_key -->
+        <input id="tmdb-key-input" class="modal-input" type="text" inputmode="text" autocomplete="off" placeholder="Cole sua API key aqui" aria-describedby="tmdb-help" data-i18n="modal.apiKeyPlaceholder" />
+        <small id="tmdb-help" class="modal-hint" data-i18n="modal.hint">Dica: você também pode usar ?tmdb_api_key=SUACHAVE na URL.</small>
+        <!-- Ações do modal -->
+        <div class="modal-actions">
+            <button class="btn btn-primary" id="tmdb-save" data-i18n="modal.save">Salvar</button>
+            <button class="btn" id="tmdb-clear" data-i18n="modal.remove">Remover</button>
+            <button class="btn btn-secondary" id="tmdb-cancel" data-i18n="modal.cancel">Cancelar</button>
+        </div>
+    </div>
+    <button class="modal-sr-close" aria-label="Fechar configurações" title="Fechar" data-i18n="modal.close"></button>
+    <div class="modal-backdrop" aria-hidden="true"></div>
+</div>
+
+<!-- Sections de contenu pour les liens du footer -->
+<!-- Central de Ajuda -->
+<div id="ajuda" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Central de Ajuda</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Bem-vindo à Central de Ajuda do CineHome</h2>
+            <p>Estamos aqui para ajudá-lo a aproveitar ao máximo sua experiência no CineHome. Encontre respostas para as perguntas mais frequentes abaixo.</p>
+            
+            <h3>Conta e Autenticação</h3>
+            <p><strong>Como faço para criar uma conta?</strong></p>
+            <p>Clique em "Entrar" no topo da página e escolha criar uma nova conta com seu e-mail ou usar login social com Google.</p>
+            
+            <p><strong>Esqueci minha senha, o que fazer?</strong></p>
+            <p>Na página de login, clique em "Esqueceu a senha?" e receberá um código de 6 dígitos por e-mail para redefinir sua senha.</p>
+            
+            <h3>Avaliações e Recomendações</h3>
+            <p><strong>Como funcionam as avaliações do CineHome?</strong></p>
+            <p>Nossas avaliações combinam dados do TMDB com análises geradas por inteligência artificial para fornecer recomendações personalizadas.</p>
+            
+            <p><strong>Como configuro a API do TMDB?</strong></p>
+            <p>Clique em "Configurar TMDB" no topo da página e insira sua chave API gratuita obtida em themoviedb.org.</p>
+            
+            <div class="footer-contact-info">
+                <h3>Precisa de mais ajuda?</h3>
+                <p>Entre em contato conosco: <strong>suporte@cinehome.com</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Termos de Uso -->
+<div id="termos" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Termos de Uso</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <p><strong>Última atualização:</strong> Janeiro 2025</p>
+            
+            <h2>1. Aceitação dos Termos</h2>
+            <p>Ao acessar e usar o CineHome, você aceita e concorda em ficar vinculado aos termos e condições deste Acordo.</p>
+            
+            <h2>2. Descrição do Serviço</h2>
+            <p>O CineHome é uma plataforma de avaliação e crítica que oferece análises, classificações e recomendações de filmes e séries. As informações fornecidas são baseadas em dados do TMDB e nossa inteligência artificial.</p>
+            
+            <h2>3. Sua Conta</h2>
+            <p>Você é responsável por manter a confidencialidade de sua conta e senha.</p>
+            <ul>
+                <li>Você deve ter pelo menos 18 anos para usar este serviço</li>
+                <li>Forneça informações precisas e completas durante o registro</li>
+                <li>Mantenha sua senha segura e não a compartilhe</li>
+                <li>Notifique-nos imediatamente sobre qualquer uso não autorizado</li>
+            </ul>
+            
+            <h2>4. Uso Aceitável</h2>
+            <p>Você concorda em NÃO:</p>
+            <ul>
+                <li>Compartilhar sua conta com terceiros</li>
+                <li>Publicar avaliações falsas ou enganosas</li>
+                <li>Fazer engenharia reversa de qualquer parte do serviço</li>
+                <li>Interferir no funcionamento normal da plataforma</li>
+            </ul>
+            
+            <h2>5. Assinatura e Cancelamento</h2>
+            <p>O acesso às funcionalidades premium de avaliação pode requerer assinatura. Você pode cancelar a qualquer momento através das configurações de conta.</p>
+            
+            <h2>6. Rescisão</h2>
+            <p>Reservamo-nos o direito de suspender ou encerrar sua conta se você violar estes termos.</p>
+            
+            <div class="footer-highlight-box">
+                <p><strong>Alterações nos Termos:</strong> Podemos atualizar estes termos periodicamente. Continuando a usar o serviço após alterações, você aceita os novos termos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacidade -->
+<div id="privacidade" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Política de Privacidade</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <p><strong>Última atualização:</strong> Janeiro 2025</p>
+            
+            <h2>Nosso Compromisso com sua Privacidade</h2>
+            <p>No CineHome, levamos sua privacidade a sério. Esta política explica como coletamos, usamos e protegemos suas informações pessoais.</p>
+            
+            <h2>1. Informações que Coletamos</h2>
+            <h3>Informações Pessoais</h3>
+            <ul>
+                <li>Endereço de e-mail</li>
+                <li>Nome (se fornecido)</li>
+                <li>Informações de pagamento (processadas por terceiros seguros)</li>
+            </ul>
+            
+            <h3>Informações de Uso</h3>
+            <ul>
+                <li>Histórico de visualização</li>
+                <li>Informações do dispositivo</li>
+                <li>Endereço IP</li>
+                <li>Cookies e tecnologias similares</li>
+            </ul>
+            
+            <h2>2. Como Usamos suas Informações</h2>
+            <p>Utilizamos suas informações para:</p>
+            <ul>
+                <li>Fornecer e melhorar nosso serviço</li>
+                <li>Personalizar recomendações de conteúdo</li>
+                <li>Comunicar atualizações e ofertas</li>
+                <li>Processar pagamentos</li>
+                <li>Prevenir fraudes e abuso</li>
+            </ul>
+            
+            <h2>3. Compartilhamento de Informações</h2>
+            <p>Não vendemos suas informações pessoais. Podemos compartilhar dados com:</p>
+            <ul>
+                <li>Provedores de serviços (hospedagem, pagamentos)</li>
+                <li>Autoridades legais quando exigido por lei</li>
+                <li>Parceiros de negócios (com seu consentimento)</li>
+            </ul>
+            
+            <h2>4. Segurança</h2>
+            <p>Implementamos medidas de segurança técnicas e organizacionais para proteger suas informações contra acesso não autorizado, alteração ou destruição.</p>
+            
+            <h2>5. Seus Direitos</h2>
+            <p>Você tem o direito de:</p>
+            <ul>
+                <li>Acessar suas informações pessoais</li>
+                <li>Corrigir dados imprecisos</li>
+                <li>Solicitar a exclusão de seus dados</li>
+                <li>Exportar seus dados</li>
+                <li>Optar por não receber comunicações de marketing</li>
+            </ul>
+            
+            <h2>6. Cookies</h2>
+            <p>Usamos cookies para melhorar sua experiência, lembrar preferências e analisar o uso do site. Você pode controlar cookies através das configurações do navegador.</p>
+            
+            <div class="footer-contact-info">
+                <h3>Contato sobre Privacidade</h3>
+                <p>Para questões sobre privacidade, entre em contato: <strong>privacidade@cinehome.com</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Informações Corporativas -->
+<div id="corporativa" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Informações Corporativas</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Sobre o CineHome</h2>
+            <p>O CineHome é uma plataforma líder em avaliação e crítica de filmes e séries, fundada em 2024 com a missão de ajudar espectadores a descobrir e avaliar o melhor conteúdo audiovisual.</p>
+            
+            <h2>Nossa Missão</h2>
+            <p>Fornecer avaliações confiáveis e recomendações personalizadas através de inteligência artificial avançada, análises detalhadas e uma comunidade engajada de cinéfilos.</p>
+            
+            <h2>Nossos Valores</h2>
+            <ul>
+                <li><strong>Inovação:</strong> Constantemente aprimoramos nossas ferramentas de avaliação</li>
+                <li><strong>Qualidade:</strong> Fornecemos análises precisas e imparciais</li>
+                <li><strong>Acessibilidade:</strong> Tornamos as avaliações disponíveis para todos</li>
+                <li><strong>Privacidade:</strong> Protegemos seus dados com máxima segurança</li>
+            </ul>
+            
+            <h2>Informações Legais</h2>
+            <p><strong>Razão Social:</strong> CineHome Reviews Ltd.</p>
+            <p><strong>Registro:</strong> 12.345.678/0001-90</p>
+            <p><strong>Endereço:</strong> Av. Paulista, 1000 - São Paulo, SP, Brasil</p>
+            <p><strong>E-mail corporativo:</strong> contato@cinehome.com</p>
+            
+            <h2>Parcerias</h2>
+            <p>Trabalhamos com as principais bases de dados de filmes e críticos especializados para fornecer as avaliações mais completas e confiáveis aos nossos usuários.</p>
+            
+            <div class="footer-highlight-box">
+                <h3>Carreiras</h3>
+                <p>Interessado em fazer parte da equipe CineHome? Visite nossa página de carreiras: <a href="mailto:rh@cinehome.com">rh@cinehome.com</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Avisos Legais -->
+<div id="avisos" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Avisos Legais</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Direitos Autorais</h2>
+            <p>Todo o conteúdo disponível no CineHome é protegido por direitos autorais. © 2024-2025 CineHome Reviews Ltd. Todos os direitos reservados.</p>
+            
+            <h2>Marcas Registradas</h2>
+            <p>CineHome, o logotipo CineHome e outras marcas relacionadas são marcas comerciais ou marcas registradas da CineHome Reviews Ltd.</p>
+            
+            <h2>Propriedade do Conteúdo</h2>
+            <p>As avaliações e análises publicadas na plataforma são de propriedade do CineHome. Dados de filmes e séries são fornecidos pelo TMDB e estão sujeitos aos seus termos de uso.</p>
+            
+            <h2>Isenção de Responsabilidade</h2>
+            <p>O serviço é fornecido "como está". Não garantimos:</p>
+            <ul>
+                <li>Que o serviço será ininterrupto ou livre de erros</li>
+                <li>A precisão absoluta de avaliações e recomendações</li>
+                <li>A disponibilidade permanente de dados sobre títulos específicos</li>
+            </ul>
+            
+            <h2>Limitação de Responsabilidade</h2>
+            <p>Em nenhuma circunstância o CineHome será responsável por danos indiretos, incidentais, especiais ou consequenciais decorrentes do uso ou incapacidade de usar o serviço.</p>
+            
+            <h2>Propriedade Intelectual</h2>
+            <p>Respeitamos os direitos de propriedade intelectual. Nossas avaliações são originais. Dados de filmes são fornecidos por APIs autorizadas. Para questões de propriedade intelectual: <strong>dmca@cinehome.com</strong></p>
+            
+            <h2>Jurisdição</h2>
+            <p>Estes termos são regidos pelas leis do Brasil. Quaisquer disputas serão resolvidas nos tribunais de São Paulo, SP.</p>
+            
+            <div class="footer-highlight-box">
+                <p><strong>Dúvidas legais?</strong> Entre em contato com nosso departamento jurídico: <a href="mailto:juridico@cinehome.com">juridico@cinehome.com</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Central de Ajuda Legal -->
+<div id="legal" class="footer-content-section">
+    <div class="footer-content-container">
+        <div class="footer-content-header">
+            <h1 class="footer-content-title">Central de Ajuda Legal</h1>
+            <button class="footer-content-close" data-close-section>&times;</button>
+        </div>
+        <div class="footer-content-body">
+            <h2>Recursos Legais e Conformidade</h2>
+            <p>Esta seção fornece recursos e informações sobre questões legais relacionadas ao uso do CineHome.</p>
+            
+            <h2>Conformidade Regulatória</h2>
+            <p>O CineHome está em conformidade com:</p>
+            <ul>
+                <li>LGPD (Lei Geral de Proteção de Dados) - Brasil</li>
+                <li>GDPR (General Data Protection Regulation) - União Europeia</li>
+                <li>COPPA (Children's Online Privacy Protection Act)</li>
+                <li>DMCA (Digital Millennium Copyright Act)</li>
+            </ul>
+            
+            <h2>Solicitações de Dados</h2>
+            <p>De acordo com LGPD e GDPR, você pode solicitar:</p>
+            <ul>
+                <li><strong>Acesso:</strong> Cópia de todos os seus dados pessoais</li>
+                <li><strong>Correção:</strong> Atualização de informações imprecisas</li>
+                <li><strong>Exclusão:</strong> Remoção de seus dados (direito ao esquecimento)</li>
+                <li><strong>Portabilidade:</strong> Transferência de dados para outro serviço</li>
+                <li><strong>Objeção:</strong> Oposição ao processamento de dados</li>
+            </ul>
+            
+            <h2>Denúncias de Violação</h2>
+            <p>Caso identifique violações, você pode reportar:</p>
+            <ul>
+                <li>Violação de direitos autorais: <strong>dmca@cinehome.com</strong></li>
+                <li>Violação de privacidade: <strong>privacidade@cinehome.com</strong></li>
+                <li>Violação de conduta: <strong>abuso@cinehome.com</strong></li>
+            </ul>
+            
+            <h2>Transparência</h2>
+            <p>Publicamos relatórios trimestrais de transparência detalhando solicitações de dados por autoridades e remoções de conteúdo.</p>
+            
+            <h2>Acessibilidade</h2>
+            <p>Estamos comprometidos em tornar nosso serviço acessível a todos. Se você encontrar barreiras de acessibilidade, informe-nos: <strong>acessibilidade@cinehome.com</strong></p>
+            
+            <div class="footer-contact-info">
+                <h3>Encarregado de Dados (DPO)</h3>
+                <p>Para questões relacionadas à proteção de dados, contate nosso DPO:</p>
+                <p><strong>E-mail:</strong> dpo@cinehome.com</p>
+                <p><strong>Telefone:</strong> +55 (11) 1234-5678</p>
+            </div>
+            
+            <div class="footer-highlight-box">
+                <h3>Tempo de Resposta</h3>
+                <p>Respondemos a todas as solicitações legais dentro de 30 dias, conforme exigido pela LGPD.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PIN Modal for Profile Switch -->
+<div class="pin-modal" id="pinModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px); z-index: 10000; justify-content: center; align-items: center;">
+    <div class="pin-content" style="background: rgba(20, 20, 20, 0.95); border: 2px solid #6366f1; border-radius: 16px; padding: 40px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 0 40px rgba(99, 102, 241, 0.5);">
+        <h2 class="pin-title" style="font-size: 24px; font-weight: 600; margin-bottom: 10px; color: #fff;">Perfil Bloqueado</h2>
+        <p class="pin-subtitle" style="font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 30px;">Digite o código PIN de 4 dígitos</p>
+        <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" inputmode="numeric" style="width: 100%; padding: 15px; font-size: 24px; text-align: center; letter-spacing: 8px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: #fff; outline: none; transition: all 0.3s ease; margin-bottom: 10px;">
+        <p class="pin-error" id="pinError" style="color: #EF4444; font-size: 14px; margin-top: 10px; display: none;">Código incorreto!</p>
+    </div>
+</div>
+
+<style>
+.pin-modal.active {
+    display: flex !important;
+}
+
+.pin-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+}
+
+.pin-input.error {
+    border-color: #EF4444;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.pin-error.show {
+    display: block !important;
+}
+
+.profile-unlock-icon.locked {
+    color: #EF4444;
+}
+</style>
+
+<!-- Scripts: autenticação, dados estáticos, interatividade principal, fundo promocional e footer -->
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script src="auto-config-tmdb.js"></script>
+<script src="data.js"></script>
+<script src="categories-data.js" defer></script>
+<script src="categories-tmdb-manager.js"></script>
+<script src="footer-content.js"></script>
+<script src="search.js"></script>
+<script src="categories.js" defer></script>
+<script src="video-modal.js" defer></script>
+<script src="profile-menu.js" defer></script>
+<script src="notifications.js"></script>
+<script src="confirm-modal.js"></script>
+<script src="favoritos.js"></script>
+<script src="movie-details-modal.js"></script>
+<script>
+  // Proteger a página - redireciona para login se não autenticado
+  if (!auth.requireAuth()) {
+    // A função requireAuth já faz o redirect
+  } else {
+    console.log('✅ Usuário autenticado:', auth.getCurrentUser().email);
+    
+    // Verificar se um perfil foi selecionado
+    const currentProfile = localStorage.getItem('cinehome_current_profile');
+    if (!currentProfile) {
+      console.log('⚠️ Nenhum perfil selecionado, redirecionando para seleção de perfil...');
+      window.location.href = 'profil.html';
+    } else {
+      console.log('✅ Perfil ativo:', currentProfile);
+    }
+  }
+</script>
+<script>
+  // Auto-enrichissement des catégories avec TMDB
+  (async function initTMDBEnrichment() {
+    // Attendre que categories-data.js soit chargé
+    if (!window.CATEGORIES_DATA) {
+      console.log('⏳ En attente de CATEGORIES_DATA...');
+      await new Promise(resolve => {
+        const checkInterval = setInterval(() => {
+          if (window.CATEGORIES_DATA) {
+            clearInterval(checkInterval);
+            resolve();
+          }
+        }, 100);
+      });
+    }
+    
+    // Vérifier si TMDB est configuré
+    if (window.CategoriesTMDBManager && CategoriesTMDBManager.init()) {
+      console.log('🔄 Enrichissement automatique des catégories TMDB...');
+      
+      try {
+        // Enrichir seulement si pas déjà enrichi
+        const firstMovie = Object.values(window.CATEGORIES_DATA)[0]?.items[0];
+        if (firstMovie && !firstMovie.tmdb_id) {
+          window.CATEGORIES_DATA = await CategoriesTMDBManager.enrichCategories(window.CATEGORIES_DATA);
+          console.log('✅ Catégories enrichies automatiquement!');
+          
+          // Déclencher un événement personnalisé pour informer que les données sont prêtes
+          window.dispatchEvent(new CustomEvent('categories-enriched', { 
+            detail: { data: window.CATEGORIES_DATA } 
+          }));
+        } else {
+          console.log('✅ Catégories déjà enrichies (depuis le cache)');
+        }
+      } catch (error) {
+        console.warn('⚠️ Erreur enrichissement:', error);
+      }
+    } else {
+      console.log('ℹ️ TMDB non configuré - utilisation des données de base');
+    }
+  })();
+</script>
+<script>
+  // Responsive text for settings button
+  function updateSettingsButtonText() {
+    const settingsBtn = document.getElementById('btn-open-settings');
+    if (settingsBtn) {
+      // Verificar se a API já está configurada
+      const apiKey = localStorage.getItem('tmdb_api_key');
+      const isConfigured = !!(apiKey && apiKey.trim().length > 0);
+      
+      if (isConfigured) {
+        // Se configurado, manter "Configurado" independente da tela
+        settingsBtn.textContent = 'Configurado';
+        settingsBtn.classList.remove('btn-secondary');
+        settingsBtn.classList.add('btn-primary', 'tmdb-configurado');
+      } else {
+        // Se não configurado, ajustar texto baseado na largura da tela
+        if (window.innerWidth <= 480) {
+          settingsBtn.textContent = 'TMDB';
+        } else {
+          settingsBtn.textContent = 'Configurar TMDB';
+        }
+        settingsBtn.classList.remove('btn-primary', 'tmdb-configurado');
+        settingsBtn.classList.add('btn-secondary');
+      }
+    }
+  }
+  
+  // Update on load and resize
+  window.addEventListener('load', updateSettingsButtonText);
+  window.addEventListener('resize', updateSettingsButtonText);
+  
+  // Update when storage changes (when API key is saved/removed)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'tmdb_api_key') {
+      updateSettingsButtonText();
+    }
+  });
+</script>
+<script src="index.js" defer></script>
+<script src="promo-bg.js" defer></script>
+<script src="footer.js" defer></script>
+<script src="script.js" defer></script>
+</body>
+</html

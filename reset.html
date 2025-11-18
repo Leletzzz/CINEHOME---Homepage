@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CINEHOME - Redefinir Senha</title>
+  <link rel="icon" href="./imagens/icon.png">
+  <!-- CSS -->
+  <link rel="stylesheet" href="layout.css">
+  <style>
+    /* Override pour reset.html - même style que login.html */
+    .wrapper {
+      max-width: 450px !important;
+      min-height: 400px;
+    }
+    
+    .title-text {
+      width: 100% !important;
+    }
+    
+    .title-text .title {
+      width: 100% !important;
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+    
+    .form-inner {
+      width: 100% !important;
+    }
+    
+    .form-inner form {
+      width: 100% !important;
+    }
+    
+    .info-box {
+      background: rgba(85, 85, 255, 0.15);
+      border: 1px solid rgba(85, 85, 255, 0.3);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 10px;
+      color: #F0F0F0;
+      font-size: 14px;
+    }
+    
+    .info-box strong {
+      color: #5555FF;
+    }
+    
+    .info-box small {
+      color: #aaa;
+      font-size: 12px;
+    }
+    
+    .message-box {
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .success-box {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22c55e;
+    }
+    
+    .error-box {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="site-title">
+    <span class="cine">CINE</span><span class="home">HOME</span>
+  </h1>
+
+  <div class="wrapper">
+    <div class="title-text">
+      <div class="title login">Redefinir Senha</div>
+    </div>
+
+    <div class="form-container">
+      <!-- Info Box -->
+      <div class="info-box">
+        <strong>Email:</strong> <span id="userEmail">carregando...</span><br>
+        <small>Autenticado via <span id="authSource">OAuth</span></small>
+      </div>
+
+      <!-- Success Message -->
+      <div id="successMessage" class="message-box success-box">
+        ✅ Senha redefinida com sucesso!<br>
+        Redirecionando para login...
+      </div>
+
+      <!-- Error Message -->
+      <div id="errorMessage" class="message-box error-box"></div>
+
+      <div class="form-inner">
+        <form id="resetPasswordForm" class="login">
+          <div class="field">
+            <input type="password" id="newPassword" placeholder="Nova senha (mín. 6 caracteres)" required minlength="6">
+          </div>
+          <div class="field">
+            <input type="password" id="confirmNewPassword" placeholder="Confirme a nova senha" required minlength="6">
+          </div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Redefinir Senha">
+          </div>
+          <div class="back-link">
+            <a href="login.html">← Voltar para o login</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script>
+    // Extrair parâmetros da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const resetToken = urlParams.get('reset_token');
+    const source = urlParams.get('source');
+
+    // Exibir fonte de autenticação
+    if (source) {
+      document.getElementById('authSource').textContent = 
+        source === 'google' ? 'Google' : 'GitHub';
+    }
+
+    // Verificar se tem token
+    if (!resetToken) {
+      document.getElementById('errorMessage').textContent = 
+        '❌ Token inválido ou expirado. Tente novamente.';
+      document.getElementById('errorMessage').style.display = 'block';
+      document.getElementById('resetPasswordForm').style.display = 'none';
+    } else {
+      // Decodificar JWT para mostrar email (sem validação de assinatura)
+      try {
+        const payload = JSON.parse(atob(resetToken.split('.')[1]));
+        document.getElementById('userEmail').textContent = payload.email || 'N/A';
+      } catch (e) {
+        document.getElementById('userEmail').textContent = 'N/A';
+      }
+    }
+
+    // Handler do formulário
+    document.getElementById('resetPasswordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmNewPassword').value;
+      const submitBtn = e.target.querySelector('input[type="submit"]');
+
+      // Validar senhas
+      if (newPassword !== confirmPassword) {
+        document.getElementById('errorMessage').textContent = 
+          '❌ As senhas não coincidem!';
+        document.getElementById('errorMessage').style.display = 'block';
+        return;
+      }
+
+      if (newPassword.length < 6) {
+        document.getElementById('errorMessage').textContent = 
+          '❌ A senha deve ter pelo menos 6 caracteres!';
+        document.getElementById('errorMessage').style.display = 'block';
+        return;
+      }
+
+      // Esconder mensagens anteriores
+      document.getElementById('errorMessage').style.display = 'none';
+
+      // Desabilitar botão
+      submitBtn.disabled = true;
+      submitBtn.value = 'Redefinindo...';
+
+      try {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/users/reset-password`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            resetToken: resetToken,
+            newPassword: newPassword
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Sucesso
+          document.getElementById('successMessage').style.display = 'block';
+          document.getElementById('resetPasswordForm').style.display = 'none';
+
+          // Redirecionar após 2 segundos
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 2000);
+        } else {
+          // Erro
+          document.getElementById('errorMessage').textContent = 
+            '❌ ' + (data.message || 'Erro ao redefinir senha');
+          document.getElementById('errorMessage').style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.value = 'Redefinir Senha';
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        document.getElementById('errorMessage').textContent = 
+          '❌ Erro de conexão. Verifique se o backend está rodando.';
+        document.getElementById('errorMessage').style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.value = 'Redefinir Senha';
+      }
+    });
+  </script>
+</body>
+</html>

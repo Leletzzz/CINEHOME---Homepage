@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar Chave TMDB - CineHome</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            display: none;
+        }
+        .error-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            display: none;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+        .current-key {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        .current-key h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 16px;
+        }
+        .key-display {
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            word-break: break-all;
+            color: #667eea;
+        }
+        .instructions {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin: 8px 0;
+            color: #856404;
+        }
+        .instructions a {
+            color: #667eea;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Configurar TMDB API</h1>
+        <p class="subtitle">Configure a chave da API do TMDB para buscar filmes e séries</p>
+
+        <div class="info-box">
+            <strong>ℹ️ Informação:</strong> A chave API do TMDB é necessária para buscar informações sobre filmes diretamente do The Movie Database.
+        </div>
+
+        <div class="instructions">
+            <h3>🔑 Como obter sua chave API?</h3>
+            <ol>
+                <li>Acesse <a href="https://www.themoviedb.org/signup" target="_blank">themoviedb.org</a> e crie uma conta (grátis)</li>
+                <li>Vá para <a href="https://www.themoviedb.org/settings/api" target="_blank">Configurações → API</a></li>
+                <li>Solicite uma chave API (escolha "Developer" ou "Personal")</li>
+                <li>Copie a "API Key (v3 auth)" e cole abaixo</li>
+            </ol>
+        </div>
+
+        <div class="success-box" id="success-box">
+            ✅ <strong>Sucesso!</strong> Chave API salva com sucesso! Agora você pode fechar esta página.
+        </div>
+
+        <div class="error-box" id="error-box">
+            ❌ <strong>Erro!</strong> <span id="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="api-key">Chave API do TMDB:</label>
+            <input 
+                type="text" 
+                id="api-key" 
+                placeholder="Cole sua chave API aqui (ex: 0195eb509bb44f3857d46334a34f118c)"
+                autocomplete="off"
+            >
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-primary" onclick="saveKey()">💾 Salvar Chave</button>
+            <button class="btn-secondary" onclick="checkKey()">🔍 Verificar</button>
+            <button class="btn-danger" onclick="clearKey()">🗑️ Limpar</button>
+        </div>
+
+        <div class="current-key" id="current-key-section" style="display: none;">
+            <h3>Chave Atual:</h3>
+            <div class="key-display" id="current-key-display">Nenhuma chave configurada</div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar chave ao carregar
+        window.onload = function() {
+            checkKey();
+        };
+
+        function saveKey() {
+            const apiKey = document.getElementById('api-key').value.trim();
+            const successBox = document.getElementById('success-box');
+            const errorBox = document.getElementById('error-box');
+            
+            // Esconder mensagens anteriores
+            successBox.style.display = 'none';
+            errorBox.style.display = 'none';
+            
+            if (!apiKey) {
+                showError('Por favor, insira uma chave API válida');
+                return;
+            }
+            
+            // Validar formato básico (32 caracteres hexadecimais)
+            if (apiKey.length !== 32 || !/^[a-f0-9]+$/i.test(apiKey)) {
+                showError('A chave API deve ter 32 caracteres hexadecimais');
+                return;
+            }
+            
+            // Salvar no localStorage
+            localStorage.setItem('tmdb_api_key', apiKey);
+            
+            // Mostrar sucesso
+            successBox.style.display = 'block';
+            
+            // Limpar input
+            document.getElementById('api-key').value = '';
+            
+            // Atualizar exibição da chave atual
+            checkKey();
+            
+            console.log('✅ Chave TMDB salva com sucesso!');
+        }
+
+        function checkKey() {
+            const apiKey = localStorage.getItem('tmdb_api_key');
+            const currentKeySection = document.getElementById('current-key-section');
+            const currentKeyDisplay = document.getElementById('current-key-display');
+            
+            if (apiKey) {
+                currentKeySection.style.display = 'block';
+                currentKeyDisplay.textContent = apiKey;
+                console.log('🔑 Chave encontrada:', apiKey);
+            } else {
+                currentKeySection.style.display = 'none';
+                currentKeyDisplay.textContent = 'Nenhuma chave configurada';
+                console.log('⚠️ Nenhuma chave TMDB configurada');
+            }
+        }
+
+        function clearKey() {
+            if (confirm('Tem certeza que deseja remover a chave API?')) {
+                localStorage.removeItem('tmdb_api_key');
+                document.getElementById('current-key-section').style.display = 'none';
+                document.getElementById('success-box').style.display = 'none';
+                console.log('🗑️ Chave TMDB removida');
+                alert('Chave API removida com sucesso!');
+            }
+        }
+
+        function showError(message) {
+            const errorBox = document.getElementById('error-box');
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorBox.style.display = 'block';
+        }
+
+        // Auto-preencher com a chave do .env (para facilitar)
+        document.getElementById('api-key').addEventListener('focus', function() {
+            if (!this.value) {
+                this.value = '0195eb509bb44f3857d46334a34f118c';
+                this.select();
+            }
+        });
+    </script>
+</body>
+</html>
