@@ -1,5 +1,6 @@
 # 🎬 CINEHOME - Plataforma de Avaliação de Filmes e Séries
 
+https://leletzzz.github.io/CINEHOME---Homepage/
 link de hospedagem : https://cinehome.onrender.com
 
 <img width="600" height="600" alt="CINEHOME - Apresentação" src="https://github.com/user-attachments/assets/77c92402-03ef-4cbe-a4d2-53a50cc2ede2" />
